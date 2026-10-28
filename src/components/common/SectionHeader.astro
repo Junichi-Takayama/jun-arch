@@ -1,0 +1,29 @@
+---
+interface Props {
+  enTitle?: string;
+  jpTitle: string;
+  align?: 'center' | 'left';
+  description?: string;
+}
+
+const { enTitle, jpTitle, align = 'center', description } = Astro.props;
+const isCenter = align === 'center';
+---
+
+<div class={`mb-10 md:mb-14 ${isCenter ? 'text-center' : 'text-left'}`}>
+  {enTitle && (
+    <span class="block text-xs font-serif tracking-widest uppercase mb-2 font-semibold" style="color: #dd9933;">
+      {enTitle}
+    </span>
+  )}
+  <h2 class="text-xl md:text-2xl font-serif tracking-wider text-[#333333]">
+    {jpTitle}
+  </h2>
+  {description && (
+    <p class="mt-3 text-xs md:text-sm text-[#666666] tracking-wider max-w-2xl mx-auto">
+      {description}
+    </p>
+  )}
+  <div class={`mt-4 w-10 h-0.5 ${isCenter ? 'mx-auto' : ''}`} style="background-color: #dd9933;"></div>
+</div>
+

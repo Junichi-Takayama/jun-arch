@@ -1,0 +1,126 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/common/Breadcrumb.astro';
+import { ua025Spec } from '../../data/siteData';
+
+const breadcrumbs = [
+  { name: 'WORKS', href: '/works/' },
+  { name: '心地いい暮らしのスタンダード。UA値0.25の住まい' },
+];
+---
+
+<Layout title="【加藤淳設計事務所×Ag-工務店】心地いい暮らしのスタンダード。UA値0.25の断熱性能を備えた過不足のない住まい">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-4 pb-20">
+    <Breadcrumb items={breadcrumbs} />
+
+    <!-- Article Header -->
+    <header class="py-8 border-b border-brand-border">
+      <div class="flex flex-wrap gap-2 mb-3">
+        <span class="text-[10px] tracking-widest px-2.5 py-0.5 bg-brand-accent text-white rounded font-medium">オーナーインタビュー</span>
+        <span class="text-[10px] tracking-widest px-2.5 py-0.5 bg-brand-surface text-brand-text rounded border border-brand-border">コラボワークス</span>
+      </div>
+      <h1 class="text-xl md:text-2xl font-serif tracking-wider text-brand-text leading-snug mb-4">
+        【加藤淳設計事務所×Ag-工務店】心地いい暮らしのスタンダード。UA値0.25の断熱性能を備えた過不足のない住まい
+      </h1>
+      <p class="text-xs text-brand-muted tracking-wider font-light">
+        ※本記事は住宅情報WEBマガジン <strong>Daily Lives Niigata</strong> による取材記事です。（写真・文／Daily Lives Niigata 鈴木亮平）
+      </p>
+    </header>
+
+    <!-- Main Visual -->
+    <div class="my-8 aspect-[16/10] overflow-hidden bg-brand-surface rounded-sm">
+      <img
+        src="https://jun-arch.com/wp-content/uploads/2026/10/Ehouse-02-1536x1024.jpg"
+        alt="E邸 外観とアプローチ"
+        class="w-full h-full object-cover"
+      />
+    </div>
+
+    <!-- Article Body -->
+    <article class="space-y-10 text-xs md:text-sm text-brand-text tracking-wider leading-loose">
+      <div>
+        <h2 class="text-base md:text-lg font-serif tracking-wider text-brand-text pb-2 border-b border-brand-border mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-4 bg-brand-accent inline-block"></span>
+          両親から受け継いだ築30年超の実家を建て替え
+        </h2>
+        <p class="mb-4 text-brand-muted">
+          E邸が立つ新潟市東区の住宅街は、30～40年前に建てられた住宅と新しい住宅が入り混じるエリア。奥様が育った築30年を超える実家の修繕時期を機に建て替えを決意。住宅会社10社程を巡る中で加藤淳設計事務所に出会ったという。
+        </p>
+        <blockquote class="p-4 bg-brand-surface border-l-2 border-brand-accent my-4 text-brand-text italic">
+          「私たちの話をきちんと聞いてくださり、プロ目線での的確なアドバイスも頂ける。この方と一緒ならいい家が建てられると確信しました」（奥様）
+        </blockquote>
+      </div>
+
+      <div>
+        <h2 class="text-base md:text-lg font-serif tracking-wider text-brand-text pb-2 border-b border-brand-border mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-4 bg-brand-accent inline-block"></span>
+          住宅街で目を引く杉板張りの外観
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+          <div class="aspect-[4/3] bg-brand-surface overflow-hidden rounded-sm">
+            <img src="https://jun-arch.com/wp-content/uploads/2026/10/Ehouse-03-768x1152.jpg" alt="杉板外観" class="w-full h-full object-cover" />
+          </div>
+          <div class="aspect-[4/3] bg-brand-surface overflow-hidden rounded-sm">
+            <img src="https://jun-arch.com/wp-content/uploads/2026/10/Ehouse-05-768x1152.jpg" alt="軒とテラス" class="w-full h-full object-cover" />
+          </div>
+        </div>
+        <p class="text-brand-muted">
+          約40坪の台形敷地の中で駐車スペースを確保し、延床面積30坪の無駄のない長方形プランに計画。正面の外壁を杉の下見板張りにし、山小屋のような優しい表情を見せています。
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-base md:text-lg font-serif tracking-wider text-brand-text pb-2 border-b border-brand-border mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-4 bg-brand-accent inline-block"></span>
+          大きな家具を置かずに暮らせるミニマルな空間
+        </h2>
+        <p class="mb-4 text-brand-muted">
+          18畳のLDKにはアール垂れ壁の籠もりスペースを配置。下部の引き出し収納や1畳分パントリーにより、キャビネットなどの家具なしで機能的なミニマル空間を実現しました。
+        </p>
+        <blockquote class="p-4 bg-brand-surface border-l-2 border-brand-accent my-4 text-brand-text italic">
+          「三方を住宅に囲まれた敷地でも、籠もりスペースや勾配天井など、多彩な居場所を散りばめることで豊かな広がりを実現しました」（加藤淳氏）
+        </blockquote>
+      </div>
+
+      <div>
+        <h2 class="text-base md:text-lg font-serif tracking-wider text-brand-text pb-2 border-b border-brand-border mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-4 bg-brand-accent inline-block"></span>
+          UA値0.25の高断熱仕様で家じゅう暖かい暮らし
+        </h2>
+        <p class="mb-4 text-brand-muted">
+          すべての窓にトリプルガラスを採用し、高性能グラスウールとフェノールフォームの付加断熱仕様。断熱性能UA値0.25（HEAT20 G2、最高等級7クリア）を誇ります。
+        </p>
+        <blockquote class="p-4 bg-brand-surface border-l-2 border-brand-accent my-4 text-brand-text italic">
+          「以前の家は窓が凍るほど寒かったのですが、今はエアコン1台で家じゅうが暖かく、室温が15℃を下回りません」（ご主人）
+        </blockquote>
+      </div>
+    </article>
+
+
+    <!-- Spec Table -->
+    <div class="mt-14 pt-8 border-t border-brand-border">
+      <h3 class="text-sm font-serif tracking-wider text-brand-text mb-4 text-center">建築データ</h3>
+      <div class="bg-brand-surface border border-brand-border rounded-sm overflow-hidden">
+        <dl class="divide-y divide-brand-border">
+          {ua025Spec.map((item) => (
+            <div class="grid grid-cols-1 sm:grid-cols-3 px-5 py-3 text-xs tracking-wider">
+              <dt class="font-medium text-brand-muted sm:col-span-1">{item.label}</dt>
+              <dd class="text-brand-text sm:col-span-2 mt-0.5 sm:mt-0 font-medium">{item.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+
+    <!-- Back to Works Link -->
+    <div class="mt-12 text-center">
+      <a
+        href="/works/"
+        class="inline-block px-8 py-3 bg-brand-surface border border-brand-border hover:border-brand-accent hover:text-brand-accent text-brand-text text-xs tracking-widest rounded font-medium transition shadow-sm"
+      >
+        ← WORKS一覧に戻る
+      </a>
+    </div>
+  </div>
+</Layout>
+

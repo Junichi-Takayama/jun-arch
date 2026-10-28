@@ -1,0 +1,43 @@
+---
+interface Props {
+  title: string;
+  category: string;
+  image: string;
+  href?: string;
+  subtitle?: string;
+  location?: string;
+}
+
+const { title, category, image, href = '/works/ua025/', subtitle, location } = Astro.props;
+---
+
+<a href={href} class="group block overflow-hidden bg-white border border-brand-border hover:border-brand-accent/60 transition-all duration-300 rounded-sm hover:shadow-md">
+  <div class="relative aspect-[3/2] overflow-hidden bg-brand-surface">
+    <img
+      src={image}
+      alt={title}
+      loading="lazy"
+      class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+    />
+    <div class="absolute top-3 left-3 bg-white/95 px-2.5 py-1 text-[10px] tracking-widest text-brand-text font-medium border-l-2 border-brand-accent shadow-sm">
+      {category}
+    </div>
+    {location && (
+      <div class="absolute bottom-3 right-3 bg-brand-text/85 text-white text-[10px] px-2 py-0.5 tracking-wider rounded-sm">
+        {location}
+      </div>
+    )}
+  </div>
+  <div class="p-4">
+    <h3 class="text-sm tracking-wider font-medium text-brand-text group-hover:text-brand-accent transition-colors line-clamp-1">
+      {title}
+    </h3>
+    {subtitle && (
+      <p class="text-xs text-brand-muted tracking-wider mt-1.5 line-clamp-2 leading-relaxed">
+        {subtitle}
+      </p>
+    )}
+  </div>
+</a>
+
+

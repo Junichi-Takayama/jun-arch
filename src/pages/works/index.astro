@@ -1,94 +1,81 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import PageHeader from '../../components/common/PageHeader.astro';
+import Breadcrumb from '../../components/common/Breadcrumb.astro';
+import WorkCard from '../../components/common/WorkCard.astro';
+import { worksList } from '../../data/siteData';
 
-const projects = [
-  {
-    title: "中庭を囲む光のコートハウス",
-    location: "東京都世田谷区",
-    type: "新築注文住宅 / 木造2階",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
-    slug: "sample-project"
-  },
-  {
-    title: "古材とモルタルが織りなす空間再生",
-    location: "神奈川県鎌倉市",
-    type: "フルリノベーション / RC造",
-    image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80",
-    slug: "sample-project"
-  },
-  {
-    title: "木立と溶け合う森のテラスヴィラ",
-    location: "長野県軽井沢町",
-    type: "別荘建築 / 木造平屋",
-    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
-    slug: "sample-project"
-  },
-  {
-    title: "スキップフロアで繋がる都市型狭小住宅",
-    location: "東京都目黒区",
-    type: "新築注文住宅 / 混構造3階",
-    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80",
-    slug: "sample-project"
-  },
-  {
-    title: "大開口リビングと借景を楽しむ平屋",
-    location: "千葉県南房総市",
-    type: "セカンドハウス / 木造平屋",
-    image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=800&q=80",
-    slug: "sample-project"
-  },
-  {
-    title: "ヴィンテージ北欧家具と暮らす家",
-    location: "神奈川県逗子市",
-    type: "フルリノベーション / RC造",
-    image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80",
-    slug: "sample-project"
-  }
-];
+const breadcrumbs = [{ name: 'WORKS一覧' }];
+
+const categories = ['すべて', '新築', 'リノベーション', 'コラボワークス', 'オーナーインタビュー'];
 ---
 
-<Layout title="施工事例・実績 | ARCH CRAFT STUDIO">
-  <PageHeader 
-    title="WORKS" 
-    subTitle="Selected Architecture & Interior Projects"
-    bgImage="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80"
-  />
+<Layout title="WORKS（建築実例一覧） – 株式会社 加藤淳設計事務所">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-4 pb-20">
+    <Breadcrumb items={breadcrumbs} />
 
-  <section class="py-24 px-6 max-w-6xl mx-auto">
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-16" data-animate="fade-up">
-      {projects.map((item) => (
-        <article class="space-y-3 group">
-          <a href={`/works/${item.slug}/`} class="block overflow-hidden rounded-sm aspect-[4/3] bg-stone-200 shadow-sm relative">
-            <img 
-              src={item.image} 
-              alt={item.title} 
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-            />
-            <span class="absolute top-3 left-3 bg-stone-900/80 text-white text-[10px] px-2 py-0.5 tracking-wider">
-              {item.location}
-            </span>
-          </a>
-          <div class="space-y-1">
-            <span class="text-[11px] text-stone-400 font-mono block">{item.type}</span>
-            <h2 class="font-serif-title font-medium text-sm text-stone-900 leading-snug group-hover:text-stone-600 transition">
-              <a href={`/works/${item.slug}/`}>
-                {item.title}
-              </a>
-            </h2>
-          </div>
-        </article>
-      ))}
+    <!-- Page Header -->
+    <div class="text-center py-10 md:py-14 border-b border-brand-border mb-8">
+      <span class="text-xs font-serif tracking-widest text-brand-accent uppercase block mb-2 font-semibold">Portfolio</span>
+      <h1 class="text-2xl md:text-3xl font-serif tracking-wider text-brand-text mb-4">
+        WORKS（建築実例）
+      </h1>
+      <p class="text-xs md:text-sm text-brand-muted tracking-wider">
+        「技術の先にある、いごこちを。」を追求した加藤淳設計事務所の建築実績です。
+      </p>
     </div>
 
-    <!-- ページネーション -->
-    <div class="flex items-center justify-center gap-2 text-xs font-mono">
-      <span class="w-10 h-10 bg-stone-900 text-white flex items-center justify-center font-bold">1</span>
-      <a href="#" class="w-10 h-10 border border-stone-300 flex items-center justify-center hover:bg-stone-100 transition">2</a>
-      <span class="px-2 text-stone-400">...</span>
-      <a href="#" class="w-10 h-10 border border-stone-300 flex items-center justify-center hover:bg-stone-100 transition">5</a>
+    <!-- Category Tabs -->
+    <div class="flex items-center justify-center flex-wrap gap-2 pb-8 border-b border-brand-border mb-10">
+      {
+        categories.map((cat, idx) => (
+          <button
+            type="button"
+            class={`px-4 py-2 text-xs tracking-widest transition-colors rounded-sm ${
+              idx === 0
+                ? 'bg-brand-accent text-white font-medium shadow-sm'
+                : 'bg-brand-surface text-brand-text hover:bg-brand-light/40 border border-brand-border'
+            }`}
+          >
+            {cat}
+          </button>
+        ))
+      }
     </div>
-  </section>
+
+    <!-- Works Grid: 3-Columns -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {
+        worksList.map((work) => (
+          <WorkCard
+            title={work.title}
+            category={work.category}
+            image={work.image}
+            href={work.href}
+            subtitle={work.subtitle}
+            location={work.location}
+          />
+        ))
+      }
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-16 pt-8 border-t border-brand-border flex justify-center items-center space-x-2">
+      <span class="w-9 h-9 flex items-center justify-center bg-brand-accent text-white text-xs font-mono rounded-sm">
+        1
+      </span>
+      <a
+        href="#"
+        class="w-9 h-9 flex items-center justify-center bg-brand-surface hover:bg-brand-light/30 border border-brand-border text-brand-text text-xs font-mono transition-colors rounded-sm"
+      >
+        2
+      </a>
+      <a
+        href="#"
+        class="px-3 h-9 flex items-center justify-center bg-brand-surface hover:bg-brand-light/30 border border-brand-border text-brand-text text-xs tracking-wider transition-colors rounded-sm"
+      >
+        NEXT →
+      </a>
+    </div>
+  </div>
 </Layout>
-
 
