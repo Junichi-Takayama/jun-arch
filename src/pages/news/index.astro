@@ -1,75 +1,59 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import PageHeader from '../../components/common/PageHeader.astro';
+import Breadcrumb from '../../components/common/Breadcrumb.astro';
+import { getNewsList } from '../../lib/microcms';
 
-const newsList = [
-  {
-    date: "2026.09.05",
-    category: "見学会",
-    title: "【完全予約制】世田谷区・中庭を囲む平屋住宅の完成見学会を開催いたします（9/20〜9/23）",
-    slug: "2026-08-24-sample"
-  },
-  {
-    date: "2026.08.28",
-    category: "メディア",
-    title: "建築デザイン誌『MODERN LIVING』2026年9月号に「軽井沢の別荘プロジェクト」が掲載されました",
-    slug: "2026-08-24-sample"
-  },
-  {
-    date: "2026.08.10",
-    category: "お知らせ",
-    title: "2026年度グッドデザイン賞の一次審査を通過いたしました",
-    slug: "2026-08-24-sample"
-  },
-  {
-    date: "2026.07.25",
-    category: "お知らせ",
-    title: "夏季休業期間のお知らせ（8月12日〜8月16日）",
-    slug: "2026-08-24-sample"
-  },
-  {
-    date: "2026.07.01",
-    category: "見学会",
-    title: "【構造見学会】耐震等級3・HEAT20 G2断熱施工の現場構造見学会（神奈川県鎌倉市）",
-    slug: "2026-08-24-sample"
-  },
-  {
-    date: "2026.06.15",
-    category: "メディア",
-    title: "Webマガジン『ArchDaily Japan』に代表・高山潤一のインタビュー記事が公開されました",
-    slug: "2026-08-24-sample"
-  }
-];
+const breadcrumbs = [{ name: 'お知らせ・見学会' }];
+const newsList = await getNewsList();
 ---
 
-<Layout title="お知らせ・メディア | ARCH CRAFT STUDIO">
-  <PageHeader 
-    title="NEWS" 
-    subTitle="Information & Media Coverage"
-    bgImage="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1920&q=80"
-  />
+<Layout title="お知らせ・見学会（NEWS） – 株式会社 加藤淳設計事務所">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-4 pb-20">
+    <Breadcrumb items={breadcrumbs} />
 
-  <section class="py-24 px-6 max-w-4xl mx-auto">
-    <div class="border-t border-b border-stone-200 divide-y divide-stone-200 mb-12 bg-white shadow-sm rounded-sm" data-animate="fade-up">
-      {newsList.map((item) => (
-        <div class="py-5 px-6 flex flex-col sm:flex-row sm:items-center gap-4 text-xs hover:bg-stone-50 transition-colors">
-          <span class="text-stone-400 font-mono text-[11px] w-24 flex-shrink-0">{item.date}</span>
-          <span class="px-2.5 py-0.5 bg-stone-900 text-white text-[10px] font-medium tracking-wider w-fit">
-            {item.category}
-          </span>
-          <a href={`/news/${item.slug}/`} class="text-stone-800 font-medium hover:text-stone-600 transition flex-grow">
-            {item.title}
-          </a>
-        </div>
-      ))}
+    <!-- Page Header -->
+    <div class="text-center py-10 md:py-14 border-b border-brand-border mb-10">
+      <span class="text-xs font-serif tracking-widest text-brand-accent uppercase block mb-2 font-semibold">Information & Event</span>
+      <h1 class="text-2xl md:text-3xl font-serif tracking-wider text-brand-text mb-4">
+        NEWS（お知らせ・見学会）
+      </h1>
+      <p class="text-xs md:text-sm text-brand-muted tracking-wider">
+        加藤淳設計事務所の最新情報、見学会（オープンハウス）の開催案内をお届けします。
+      </p>
     </div>
 
-    <!-- ページネーション -->
-    <div class="flex items-center justify-center gap-2 text-xs font-mono">
-      <span class="w-10 h-10 bg-stone-900 text-white flex items-center justify-center font-bold">1</span>
-      <a href="#" class="w-10 h-10 border border-stone-300 flex items-center justify-center hover:bg-stone-100 transition">2</a>
+    <!-- News List -->
+    <div class="border-t border-b border-brand-border divide-y divide-brand-border mb-12 bg-white">
+      {
+        newsList.map((item) => (
+          <div class="py-5 px-3 sm:px-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 group hover:bg-brand-surface/60 transition-colors">
+            <div class="flex items-center space-x-3 shrink-0">
+              <span class="text-xs text-brand-muted tracking-wider font-mono w-24">{item.date}</span>
+              <span class="text-[10px] tracking-wider px-2.5 py-0.5 bg-brand-light text-brand-dark rounded border border-brand-border/60">
+                {item.category}
+              </span>
+            </div>
+            <a
+              href={`/news/${item.id}/`}
+              class="text-xs md:text-sm tracking-wider text-brand-text group-hover:text-brand-accent transition-colors flex-1 sm:ml-4 font-medium"
+            >
+              {item.title}
+            </a>
+          </div>
+        ))
+      }
     </div>
-  </section>
+
+    <!-- Back to Top CTA -->
+    <div class="text-center pt-4">
+      <a
+        href="/"
+        class="inline-block px-8 py-3 bg-brand-surface hover:bg-brand-light border border-brand-border text-brand-text text-xs tracking-widest rounded font-medium transition shadow-sm"
+      >
+        ← トップページに戻る
+      </a>
+    </div>
+  </div>
 </Layout>
 
 

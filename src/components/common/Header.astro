@@ -6,8 +6,8 @@ interface Props {
 const { activePath = '/' } = Astro.props;
 
 const navItems = [
-  { name: 'TOP', href: '/' },
-  { name: 'NEWS', href: '/#news' },
+  { name: 'TOP', href: '#' },
+  { name: 'NEWS', href: '#' },
   { name: '家づくりについて', href: '/concept/' },
   { name: 'WORKS一覧', href: '/works/' },
   { name: 'オーナーインタビュー', href: '/works/ua025/' },
@@ -15,8 +15,8 @@ const navItems = [
 
 const contactSubItems = [
   { name: 'CONTACT', href: '/contact/' },
-  { name: '資料請求', href: '/request/' },
-  { name: 'プライバシーポリシー', href: '/privacy/' },
+  { name: '資料請求', href: '#' },
+  { name: 'プライバシーポリシー', href: '#' },
 ];
 
 const isContactActive = activePath.startsWith('/contact') || activePath.startsWith('/request') || activePath.startsWith('/privacy');

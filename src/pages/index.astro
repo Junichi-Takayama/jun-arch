@@ -1,7 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import WorkCard from '../components/common/WorkCard.astro';
-import { newsList, worksList, noteList, mediaList } from '../data/siteData';
+import { worksList, noteList, mediaList } from '../data/siteData';
+import { getNewsList } from '../lib/microcms';
+
+const newsList = await getNewsList({ limit: 3 });
 ---
 
 <Layout title="株式会社 加藤淳設計事務所 – 技術の先にある、いごこちを">
@@ -84,7 +87,7 @@ import { newsList, worksList, noteList, mediaList } from '../data/siteData';
                 </span>
               </div>
               <a
-                href={item.href}
+                href={`/news/${item.id}/`}
                 class="text-xs md:text-sm tracking-wider text-brand-text group-hover:text-brand-accent transition-colors flex-1 md:ml-4"
               >
                 {item.title}
@@ -110,9 +113,7 @@ import { newsList, worksList, noteList, mediaList } from '../data/siteData';
                 Instagram
               </h2>
               <a
-                href="https://www.instagram.com/katojun0826/"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#"
                 class="text-xs text-brand-accent tracking-widest hover:underline"
               >
                 @katojun0826
@@ -123,9 +124,7 @@ import { newsList, worksList, noteList, mediaList } from '../data/siteData';
               {
                 worksList.slice(0, 6).map((item) => (
                   <a
-                    href="https://www.instagram.com/katojun0826/"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href="#"
                     class="aspect-square overflow-hidden group block rounded-sm bg-stone-100"
                   >
                     <img
@@ -141,9 +140,7 @@ import { newsList, worksList, noteList, mediaList } from '../data/siteData';
           </div>
           <div class="text-center pt-2">
             <a
-              href="https://www.instagram.com/katojun0826/"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#"
               class="inline-block px-8 py-2.5 bg-brand-surface border border-brand-border hover:border-brand-accent hover:text-brand-accent text-brand-text text-xs tracking-wider rounded font-medium transition shadow-sm"
             >
               Instagramを見る
@@ -160,9 +157,7 @@ import { newsList, worksList, noteList, mediaList } from '../data/siteData';
                 加藤淳設計事務所の備忘録
               </h2>
               <a
-                href="https://note.com/kato_arch"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#"
                 class="text-xs text-brand-muted hover:text-brand-accent tracking-widest"
               >
                 note →
@@ -174,9 +169,7 @@ import { newsList, worksList, noteList, mediaList } from '../data/siteData';
               {
                 noteList.slice(0, 4).map((item) => (
                   <a
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href="#"
                     class="group flex gap-3 p-2.5 bg-brand-surface border border-brand-border hover:border-brand-accent/50 rounded-sm transition"
                   >
                     <div class="w-20 h-16 shrink-0 overflow-hidden rounded-sm bg-stone-100">
@@ -200,9 +193,7 @@ import { newsList, worksList, noteList, mediaList } from '../data/siteData';
           </div>
           <div class="text-center pt-2">
             <a
-              href="https://note.com/kato_arch"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#"
               class="inline-block px-8 py-2.5 bg-brand-surface border border-brand-border hover:border-brand-accent hover:text-brand-accent text-brand-text text-xs tracking-wider rounded font-medium transition shadow-sm"
             >
               note記事一覧を見る
@@ -233,9 +224,7 @@ import { newsList, worksList, noteList, mediaList } from '../data/siteData';
         <!-- バナーリンク -->
         <div>
           <a
-            href="https://daily-lives-niigata.com/2023/02/23/katojun/"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#"
             class="block overflow-hidden rounded-sm shadow-sm hover:opacity-95 transition"
           >
             <img
@@ -298,9 +287,7 @@ import { newsList, worksList, noteList, mediaList } from '../data/siteData';
 
         <!-- 2: シマトネリコの木 -->
         <a
-          href="https://jun-arch.com/works/%e3%80%90%e5%8a%a0%e8%97%a4%e6%b7%b3%e8%a8%ad%e8%a8%88%e4%ba%8b%e5%8b%99%e6%89%80xag-%e5%b7%a5%e5%8b%99%e5%ba%97%e3%80%91%e3%82%b7%e3%83%9e%e3%83%88%e3%83%8d%e3%83%aa%e3%82%b3%e3%81%ae%e6%9c%a8/"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="#"
           class="block overflow-hidden rounded-sm shadow-sm hover:opacity-90 transition group"
         >
           <img
@@ -313,9 +300,7 @@ import { newsList, worksList, noteList, mediaList } from '../data/siteData';
 
         <!-- 3: W邸（日常新潟） -->
         <a
-          href="https://daily-lives-niigata.com/2025/09/01/kato-ag-10/"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="#"
           class="block overflow-hidden rounded-sm shadow-sm hover:opacity-90 transition group"
         >
           <img
@@ -354,7 +339,7 @@ import { newsList, worksList, noteList, mediaList } from '../data/siteData';
               title={work.title}
               category={work.category}
               image={work.image}
-              href={work.href}
+              href="#"
               subtitle={work.subtitle}
               location={work.location}
             />
@@ -382,7 +367,7 @@ import { newsList, worksList, noteList, mediaList } from '../data/siteData';
           メディア掲載履歴
         </h2>
         <a
-          href="/media/"
+          href="#"
           class="text-xs tracking-widest text-brand-muted hover:text-brand-accent transition-colors"
         >
           MORE →
@@ -400,7 +385,7 @@ import { newsList, worksList, noteList, mediaList } from '../data/siteData';
                 </span>
               </div>
               <a
-                href={item.href}
+                href="#"
                 class="text-xs md:text-sm tracking-wider text-brand-text group-hover:text-brand-accent transition-colors flex-1 md:ml-4"
               >
                 {item.title}

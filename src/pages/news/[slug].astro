@@ -1,68 +1,124 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import PageHeader from '../../components/common/PageHeader.astro';
+import Breadcrumb from '../../components/common/Breadcrumb.astro';
+import { getNewsList, getNewsDetail } from '../../lib/microcms';
 
-export function getStaticPaths() {
-  return [
-    { params: { slug: '2026-08-24-sample' } },
-  ];
+export async function getStaticPaths() {
+  const newsList = await getNewsList();
+  return newsList.map((item) => ({
+    params: { slug: item.id },
+  }));
 }
+
+const { slug } = Astro.params;
+const news = await getNewsDetail(slug as string);
+
+if (!news) {
+  return Astro.redirect('/news/');
+}
+
+const breadcrumbs = [
+  { name: 'お知らせ・見学会', href: '/news/' },
+  { name: news.title },
+];
 ---
 
-<Layout title="【見学会】世田谷・中庭を囲む平屋住宅 完成見学会 | ARCH CRAFT STUDIO">
-  <PageHeader 
-    title="NEWS DETAIL" 
-    subTitle="Event & Information"
-  />
+<Layout title={`${news.title} – 株式会社 加藤淳設計事務所`}>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-4 pb-20">
+    <Breadcrumb items={breadcrumbs} />
 
-  <section class="py-20 px-6 max-w-3xl mx-auto space-y-10">
-    <div class="border-b border-stone-200 pb-6 space-y-3" data-animate="fade-up">
-      <div class="flex items-center gap-3 text-xs">
-        <span class="text-stone-400 font-mono text-[11px]">2026.09.05</span>
-        <span class="px-2.5 py-0.5 bg-stone-900 text-white text-[10px] font-medium tracking-wider">見学会</span>
+    <!-- Article Header -->
+    <article class="max-w-3xl mx-auto pt-6 pb-12">
+      <header class="border-b border-brand-border pb-6 mb-8 space-y-4">
+        <div class="flex items-center gap-3 text-xs">
+          <span class="text-brand-muted font-mono tracking-wider">{news.date}</span>
+          <span class="px-2.5 py-0.5 bg-brand-light text-brand-dark text-[10px] tracking-wider font-medium rounded border border-brand-border/60">
+            {news.category}
+          </span>
+        </div>
+        <h1 class="text-xl sm:text-2xl md:text-3xl font-serif font-medium text-brand-text leading-snug tracking-wider">
+          {news.title}
+        </h1>
+      </header>
+
+      <!-- Thumbnail -->
+      {
+        news.thumbnail && (
+          <div class="aspect-[16/9] sm:aspect-[21/9] overflow-hidden rounded-sm bg-brand-surface mb-8 border border-brand-border">
+            <img
+              src={news.thumbnail.url}
+              alt={news.title}
+              class="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </div>
+        )
+      }
+
+      <!-- Body Content -->
+      <div
+        class="news-content text-xs sm:text-sm text-brand-text leading-[2.2] tracking-wider space-y-6 font-light"
+        set:html={news.content}
+      />
+
+      <!-- Action Navigation -->
+      <div class="pt-12 mt-12 border-t border-brand-border flex flex-col sm:flex-row justify-between items-center gap-4">
+        <a
+          href="/news/"
+          class="inline-flex items-center gap-2 px-6 py-2.5 bg-brand-surface hover:bg-brand-light border border-brand-border text-brand-text text-xs tracking-wider rounded font-medium transition shadow-sm w-full sm:w-auto justify-center"
+        >
+          <span>←</span>
+          <span>お知らせ一覧に戻る</span>
+        </a>
+        <a
+          href="/contact/"
+          class="inline-flex items-center gap-2 px-6 py-2.5 bg-brand-accent hover:opacity-95 text-white text-xs tracking-wider rounded font-medium transition shadow-sm w-full sm:w-auto justify-center"
+        >
+          <span>家づくりのご相談・見学予約はこちら</span>
+          <span>→</span>
+        </a>
       </div>
-      <h1 class="font-serif-title text-2xl md:text-3xl font-medium text-stone-900 leading-snug">
-        【完全予約制】世田谷区・中庭を囲む平屋住宅の完成見学会を開催いたします（9/20〜9/23）
-      </h1>
-    </div>
-
-    <div class="text-xs md:text-sm text-stone-600 leading-loose space-y-6 font-light" data-animate="fade-up">
-      <div class="aspect-[16/9] overflow-hidden rounded-sm bg-stone-200 mb-6">
-        <img 
-          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80" 
-          alt="世田谷の家 見学会" 
-          class="w-full h-full object-cover"
-        />
-      </div>
-
-      <p>
-        この度、お施主様のご厚意により、東京都世田谷区にて竣工いたしました注文住宅の完成見学会を【4日間限定・完全予約制】にて開催いたします。
-      </p>
-      
-      <div class="bg-stone-100 p-6 rounded-sm border border-stone-200 space-y-3 text-xs">
-        <p class="font-bold text-stone-900 text-sm">見学会 概要</p>
-        <p>・日時：2026年9月20日(土) 〜 9月23日(火・祝) 10:00〜17:00</p>
-        <p>・場所：東京都世田谷区（ご予約確定後に詳細住所をお送りいたします）</p>
-        <p>・規模：木造2階建て / 延床面積 135.20㎡</p>
-        <p>・性能：耐震等級3 / HEAT20 G2 / C値 0.4</p>
-      </div>
-
-      <p>
-        中庭を中心とした採光計画や、オーク無垢床と大谷石左官壁の上質な質感、専属家具職人による特注アイランドキッチンなど、ARCH CRAFT STUDIO の設計思想を実際にご体感いただける貴重な機会です。
-      </p>
-    </div>
-
-    <div class="pt-8 border-t border-stone-200 flex justify-between items-center">
-      <a href="/news/" class="inline-flex items-center gap-2 px-6 py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs tracking-wider transition">
-        <span>&larr;</span>
-        <span>お知らせ一覧に戻る</span>
-      </a>
-      <a href="/contact/" class="inline-flex items-center gap-2 px-6 py-2.5 bg-stone-900 hover:bg-stone-800 text-white text-xs tracking-wider transition shadow-sm">
-        <span>見学会を予約する</span>
-        <span>&rarr;</span>
-      </a>
-    </div>
-  </section>
+    </article>
+  </div>
 </Layout>
+
+<style is:global>
+  .news-content p {
+    margin-bottom: 1.5rem;
+  }
+  .news-content h2,
+  .news-content h3,
+  .news-content h4 {
+    font-family: inherit;
+    font-weight: 600;
+    color: #333333;
+    letter-spacing: 0.05em;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  .news-content h2 {
+    font-size: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eeeeee;
+  }
+  .news-content h3 {
+    font-size: 1.1rem;
+  }
+  .news-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 2px;
+    margin: 1.5rem 0;
+  }
+  .news-content a {
+    color: #dd9933;
+    text-decoration: underline;
+    transition: opacity 0.2s;
+  }
+  .news-content a:hover {
+    opacity: 0.8;
+  }
+</style>
+
 
 
