@@ -1,0 +1,42 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/common/Breadcrumb.astro';
+
+const breadcrumbs = [
+  { name: '家づくりについて', href: '/concept/' },
+  { name: 'メディア掲載' }
+];
+---
+
+<Layout title="メディア掲載 – 株式会社 加藤淳設計事務所">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-4 pb-20">
+    <Breadcrumb items={breadcrumbs} />
+
+    <!-- Page Header -->
+    <div class="text-center py-10 md:py-14 border-b border-brand-border mb-10">
+      <span class="text-xs font-serif tracking-widest text-brand-accent uppercase block mb-2 font-semibold">Media</span>
+      <h1 class="text-2xl md:text-3xl font-serif tracking-wider text-brand-text mb-4">
+        メディア掲載
+      </h1>
+      <p class="text-xs md:text-sm text-brand-muted tracking-wider">
+        雑誌・WEBマガジン・テレビ等のメディア掲載実績
+      </p>
+    </div>
+
+    <!-- コンテンツ枠（ハコ） -->
+    <div class="bg-brand-surface/40 border border-brand-border rounded-sm p-8 md:p-12 text-center text-brand-muted">
+      <p class="font-serif text-sm md:text-base text-brand-text mb-2">【コンテンツ準備中】</p>
+      <p class="text-xs">現行サイトのメディア掲載実績を移植・整備予定です。</p>
+    </div>
+
+    <!-- Back to Top CTA -->
+    <div class="text-center pt-12">
+      <a
+        href="/"
+        class="inline-block px-8 py-3 bg-brand-surface hover:bg-brand-light border border-brand-border text-brand-text text-xs tracking-widest rounded font-medium transition shadow-sm"
+      >
+        ← トップページに戻る
+      </a>
+    </div>
+  </div>
+</Layout>

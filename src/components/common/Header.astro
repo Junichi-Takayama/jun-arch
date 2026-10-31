@@ -5,21 +5,21 @@ interface Props {
 
 const { activePath = '/' } = Astro.props;
 
-const navItems = [
-  { name: 'TOP', href: '#' },
-  { name: 'NEWS', href: '#' },
+const conceptSubItems = [
   { name: '家づくりについて', href: '/concept/' },
-  { name: 'WORKS一覧', href: '/works/' },
-  { name: 'オーナーインタビュー', href: '/works/ua025/' },
+  { name: '代表ごあいさつ', href: '/message/' },
+  { name: '事務所概要', href: '/aboutus/' },
+  { name: 'メディア掲載', href: '/media/' },
 ];
 
 const contactSubItems = [
-  { name: 'CONTACT', href: '/contact/' },
-  { name: '資料請求', href: '#' },
-  { name: 'プライバシーポリシー', href: '#' },
+  { name: 'お問い合わせ・ご相談', href: '/contact/' },
+  { name: '資料請求', href: '/contact/request/' },
+  { name: 'プライバシーポリシー', href: '/privacy-policy/' },
 ];
 
-const isContactActive = activePath.startsWith('/contact') || activePath.startsWith('/request') || activePath.startsWith('/privacy');
+const isConceptActive = activePath.startsWith('/concept') || activePath.startsWith('/message') || activePath.startsWith('/aboutus') || activePath.startsWith('/media');
+const isContactActive = activePath.startsWith('/contact') || activePath.startsWith('/privacy-policy');
 ---
 
 <header class="bg-white/95 backdrop-blur-md border-b border-brand-border sticky top-0 z-50 transition-all duration-300">
@@ -48,24 +48,90 @@ const isContactActive = activePath.startsWith('/contact') || activePath.startsWi
     </div>
 
     <!-- デスクトップナビゲーション -->
-    <nav class="hidden md:flex items-center gap-7 text-xs tracking-wider uppercase font-medium text-brand-text">
-      {
-        navItems.map((item) => {
-          const isActive = activePath === item.href || (item.href !== '/' && activePath.startsWith(item.href));
-          return (
-            <a
-              href={item.href}
-              class={`py-1 transition-colors hover:text-brand-accent ${
-                isActive ? 'text-brand-accent font-semibold border-b-2 border-brand-accent' : 'text-brand-muted'
-              }`}
-            >
-              {item.name}
-            </a>
-          );
-        })
-      }
+    <nav class="hidden md:flex items-center gap-4 lg:gap-6 text-xs tracking-wider uppercase font-medium text-brand-text">
+      <a
+        href="/"
+        class={`py-1 transition-colors hover:text-brand-accent ${
+          activePath === '/' ? 'text-brand-accent font-semibold border-b-2 border-brand-accent' : 'text-brand-muted'
+        }`}
+      >
+        TOP
+      </a>
 
-      <!-- CONTACT (ホバーアコーディオン / ドロップダウン) -->
+      <a
+        href="/news/"
+        class={`py-1 transition-colors hover:text-brand-accent ${
+          activePath.startsWith('/news') ? 'text-brand-accent font-semibold border-b-2 border-brand-accent' : 'text-brand-muted'
+        }`}
+      >
+        NEWS
+      </a>
+
+      <!-- 家づくりについて (ドロップダウン) -->
+      <div class="relative group py-2">
+        <a
+          href="/concept/"
+          class={`flex items-center gap-1 py-1 transition-colors hover:text-brand-accent ${
+            isConceptActive ? 'text-brand-accent font-semibold border-b-2 border-brand-accent' : 'text-brand-muted'
+          }`}
+        >
+          <span>家づくりについて</span>
+          <svg class="w-3 h-3 text-brand-muted group-hover:text-brand-accent transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </a>
+
+        <div class="absolute left-0 top-full hidden group-hover:block w-48 bg-white border border-brand-border shadow-lg rounded-sm py-2 z-50">
+          {
+            conceptSubItems.map((sub) => (
+              <a
+                href={sub.href}
+                class="block px-4 py-2 text-xs tracking-wider text-brand-text hover:bg-brand-surface hover:text-brand-accent transition-colors"
+              >
+                {sub.name}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+      <a
+        href="/owner-interview/"
+        class={`py-1 transition-colors hover:text-brand-accent ${
+          activePath.startsWith('/owner-interview') ? 'text-brand-accent font-semibold border-b-2 border-brand-accent' : 'text-brand-muted'
+        }`}
+      >
+        オーナーインタビュー
+      </a>
+
+      <a
+        href="/works/"
+        class={`py-1 transition-colors hover:text-brand-accent ${
+          activePath.startsWith('/works') ? 'text-brand-accent font-semibold border-b-2 border-brand-accent' : 'text-brand-muted'
+        }`}
+      >
+        WORKS一覧
+      </a>
+
+      <a
+        href="/blog/"
+        class={`py-1 transition-colors hover:text-brand-accent ${
+          activePath.startsWith('/blog') ? 'text-brand-accent font-semibold border-b-2 border-brand-accent' : 'text-brand-muted'
+        }`}
+      >
+        BLOG
+      </a>
+
+      <a
+        href="/qa/"
+        class={`py-1 transition-colors hover:text-brand-accent ${
+          activePath.startsWith('/qa') ? 'text-brand-accent font-semibold border-b-2 border-brand-accent' : 'text-brand-muted'
+        }`}
+      >
+        Q&A
+      </a>
+
+      <!-- CONTACT (ドロップダウン) -->
       <div class="relative group py-2">
         <a
           href="/contact/"
@@ -79,7 +145,6 @@ const isContactActive = activePath.startsWith('/contact') || activePath.startsWi
           </svg>
         </a>
 
-        <!-- サブメニュー -->
         <div class="absolute right-0 top-full hidden group-hover:block w-48 bg-white border border-brand-border shadow-lg rounded-sm py-2 z-50">
           {
             contactSubItems.map((sub) => (
@@ -98,16 +163,45 @@ const isContactActive = activePath.startsWith('/contact') || activePath.startsWi
 
   <!-- モバイルドロワーメニュー -->
   <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-brand-border px-6 py-4 space-y-2">
-    {
-      navItems.map((item) => (
-        <a
-          href={item.href}
-          class="block py-2 border-b border-brand-border text-xs tracking-widest text-brand-text hover:text-brand-accent"
-        >
-          {item.name}
-        </a>
-      ))
-    }
+    <a href="/" class="block py-2 border-b border-brand-border text-xs tracking-widest text-brand-text hover:text-brand-accent">
+      TOP
+    </a>
+    <a href="/news/" class="block py-2 border-b border-brand-border text-xs tracking-widest text-brand-text hover:text-brand-accent">
+      NEWS
+    </a>
+
+    <!-- 家づくりについて & サブメニュー -->
+    <div class="pt-1 border-b border-brand-border pb-2">
+      <a href="/concept/" class="py-1 text-xs tracking-widest font-semibold text-brand-text block hover:text-brand-accent">
+        家づくりについて
+      </a>
+      <div class="pl-4 space-y-1.5 mt-1">
+        {
+          conceptSubItems.map((sub) => (
+            <a
+              href={sub.href}
+              class="block py-1 text-xs tracking-wider text-brand-muted hover:text-brand-accent"
+            >
+              ・ {sub.name}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+
+    <a href="/owner-interview/" class="block py-2 border-b border-brand-border text-xs tracking-widest text-brand-text hover:text-brand-accent">
+      オーナーインタビュー
+    </a>
+    <a href="/works/" class="block py-2 border-b border-brand-border text-xs tracking-widest text-brand-text hover:text-brand-accent">
+      WORKS一覧
+    </a>
+    <a href="/blog/" class="block py-2 border-b border-brand-border text-xs tracking-widest text-brand-text hover:text-brand-accent">
+      BLOG
+    </a>
+    <a href="/qa/" class="block py-2 border-b border-brand-border text-xs tracking-widest text-brand-text hover:text-brand-accent">
+      Q&A
+    </a>
+
     <!-- CONTACT & サブメニュー -->
     <div class="pt-1 border-b border-brand-border pb-2">
       <div class="py-1 text-xs tracking-widest font-semibold text-brand-text">CONTACT</div>
