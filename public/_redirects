@@ -1,0 +1,11 @@
+# Cloudflare Pages 301 Redirects for jun-arch.com
+
+# オーナーインタビュー旧WORKS内URL・カテゴリからの301リダイレクト
+/works/ua025/                           /owner-interview/ua025/         301
+/works/ua025                            /owner-interview/ua025/         301
+/works/voice-shibata/                   /owner-interview/voice-shibata/ 301
+/works/voice-shibata                    /owner-interview/voice-shibata/ 301
+/works_ownerinterview/owner-interview/  /owner-interview/               301
+/works_ownerinterview/owner-interview   /owner-interview/               301
+/works/category/interview/              /owner-interview/               301
+/works/category/interview               /owner-interview/               301

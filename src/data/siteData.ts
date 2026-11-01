@@ -12,7 +12,7 @@ export const worksList: WorkItem[] = [
   {
     id: 'ua025',
     title: '【加藤淳設計事務所×Ag-工務店】心地いい暮らしのスタンダード。UA値0.25',
-    category: 'オーナーインタビュー',
+    category: 'コラボワークス',
     image: 'https://jun-arch.com/wp-content/uploads/2026/10/Ehouse-02-1024x683.jpg',
     href: '/works/ua025/',
     subtitle: '三方を住宅に囲まれた約40坪の台形敷地に、杉板張りとUA値0.25の過不足のない住まい。',
