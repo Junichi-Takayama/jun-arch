@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Breadcrumb from '../../components/common/Breadcrumb.astro';
+import { faqSections } from '../../data/qaData';
 
 const breadcrumbs = [
   { name: 'よくあるご質問' }
@@ -11,31 +12,71 @@ const breadcrumbs = [
   <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-4 pb-20">
     <Breadcrumb items={breadcrumbs} />
 
-    <!-- Page Header -->
-    <div class="text-center py-10 md:py-14 border-b border-brand-border mb-10">
+    <!-- Page Header (h1) -->
+    <div class="text-center py-10 md:py-14 border-b border-brand-border mb-12">
       <span class="text-xs font-serif tracking-widest text-brand-accent uppercase block mb-2 font-semibold">Q&A</span>
       <h1 class="text-2xl md:text-3xl font-serif tracking-wider text-brand-text mb-4">
         よくあるご質問
       </h1>
       <p class="text-xs md:text-sm text-brand-muted tracking-wider">
-        家づくりの進め方や費用、設計期間など、よくいただくご質問にお答えします
+        家づくりの進め方や費用、設計期間など、お客様からよくいただくご質問にお答えします
       </p>
     </div>
 
-    <!-- コンテンツ枠（ハコ） -->
-    <div class="bg-brand-surface/40 border border-brand-border rounded-sm p-8 md:p-12 text-center text-brand-muted">
-      <p class="font-serif text-sm md:text-base text-brand-text mb-2">【コンテンツ準備中】</p>
-      <p class="text-xs">現行サイトのQ&Aコンテンツを移植・整備予定です。</p>
+    <!-- FAQ セクション一覧 -->
+    <div class="space-y-12 mb-16">
+      {
+        faqSections.map((sec) => (
+          <section class="space-y-4">
+            <!-- セクション見出し (h2) -->
+            <h2 class="text-base sm:text-lg font-serif font-medium text-brand-text pb-2.5 border-b border-brand-border flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-brand-accent"></span>
+              {sec.title}
+            </h2>
+
+            <div class="space-y-4 pt-2">
+              {
+                sec.items.map((item) => (
+                  <div class="bg-white border border-brand-border rounded-sm p-5 sm:p-6 shadow-xs space-y-3">
+                    <!-- 質問 (Q) -->
+                    <div class="flex items-start gap-3">
+                      <span class="shrink-0 w-6 h-6 rounded-full bg-brand-accent text-white flex items-center justify-center font-serif text-xs font-bold leading-none mt-0.5">
+                        Q
+                      </span>
+                      <h3 class="font-serif font-medium text-sm sm:text-base text-brand-text leading-snug">
+                        {item.q}
+                      </h3>
+                    </div>
+
+                    <!-- 回答 (A) -->
+                    <div class="flex items-start gap-3 pt-2 border-t border-brand-border/60">
+                      <span class="shrink-0 w-6 h-6 rounded-full bg-brand-surface border border-brand-border text-brand-text flex items-center justify-center font-serif text-xs font-bold leading-none mt-0.5">
+                        A
+                      </span>
+                      <div class="text-xs sm:text-sm text-brand-text/90 leading-[2.1] whitespace-pre-line font-sans">
+                        {item.a}
+                      </div>
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
+          </section>
+        ))
+      }
     </div>
 
-    <!-- Back to Top CTA -->
-    <div class="text-center pt-12">
+    <!-- お問い合わせCTA -->
+    <div class="text-center bg-brand-surface p-8 border border-brand-border rounded-sm">
+      <p class="font-serif text-base text-brand-text font-medium mb-2">その他にご不明な点はございますか？</p>
+      <p class="text-xs text-brand-muted mb-6">どんな些細な疑問やご相談でも、お気軽にお問い合わせください。</p>
       <a
-        href="/"
-        class="inline-block px-8 py-3 bg-brand-surface hover:bg-brand-light border border-brand-border text-brand-text text-xs tracking-widest rounded font-medium transition shadow-sm"
+        href="/contact/"
+        class="inline-block px-10 py-3.5 bg-brand-accent hover:bg-brand-dark text-white font-bold text-xs tracking-widest rounded transition shadow-sm"
       >
-        ← トップページに戻る
+        お問い合わせ・無料相談はこちら
       </a>
     </div>
   </div>
 </Layout>
+

@@ -6,36 +6,206 @@ const breadcrumbs = [
   { name: '家づくりについて', href: '/concept/' },
   { name: '事務所概要' }
 ];
+
+const businessServices = [
+  '住宅を初めとする建築物の設計・監理',
+  'オーダー家具の製作（設計・施工）',
+  '店舗・事務所などのインテリアの設計・監理',
+  '許容応力度計算（木造3階建まで）'
+];
 ---
 
 <Layout title="事務所概要 – 株式会社 加藤淳設計事務所">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-4 pb-20">
     <Breadcrumb items={breadcrumbs} />
 
-    <!-- Page Header -->
-    <div class="text-center py-10 md:py-14 border-b border-brand-border mb-10">
+    <!-- Page Header (h1) -->
+    <div class="text-center py-10 md:py-14 border-b border-brand-border mb-12">
       <span class="text-xs font-serif tracking-widest text-brand-accent uppercase block mb-2 font-semibold">About Us</span>
       <h1 class="text-2xl md:text-3xl font-serif tracking-wider text-brand-text mb-4">
         事務所概要
       </h1>
       <p class="text-xs md:text-sm text-brand-muted tracking-wider">
-        株式会社加藤淳設計事務所の会社概要・アクセス・事務所情報
+        株式会社 加藤淳設計事務所の会社概要・業務内容・アクセス情報
       </p>
     </div>
 
-    <!-- コンテンツ枠（ハコ） -->
-    <div class="bg-brand-surface/40 border border-brand-border rounded-sm p-8 md:p-12 text-center text-brand-muted">
-      <p class="font-serif text-sm md:text-base text-brand-text mb-2">【コンテンツ準備中】</p>
-      <p class="text-xs">現行サイトの事務所概要コンテンツを移植・整備予定です。</p>
+    <!-- コンセプト誘導バナー -->
+    <div class="bg-brand-surface p-4 sm:p-5 border border-brand-border rounded-sm mb-12 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm">
+      <span class="text-brand-text">加藤淳設計事務所の家づくりコンセプト・特徴はこちらをご覧ください。</span>
+      <a
+        href="/concept/"
+        class="inline-block px-5 py-2 bg-white hover:bg-stone-50 border border-brand-border text-brand-text text-xs tracking-wider rounded font-medium transition shadow-xs shrink-0"
+      >
+        家づくりについて →
+      </a>
     </div>
 
-    <!-- Back to Top CTA -->
-    <div class="text-center pt-12">
+    <div class="space-y-12">
+      <!-- 業務内容（h3 構造踏襲） -->
+      <section class="bg-white border border-brand-border rounded-sm p-6 sm:p-8 shadow-sm">
+        <h3 class="text-base sm:text-lg font-serif font-medium text-brand-text pb-3 border-b border-brand-border flex items-center gap-2 mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span>
+          業務内容
+        </h3>
+        <ul class="space-y-3 text-xs sm:text-sm text-brand-text pl-2 mb-6">
+          {
+            businessServices.map((service) => (
+              <li class="flex items-center gap-2.5">
+                <span class="text-brand-accent text-sm">✔</span>
+                <span>{service}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <div class="pt-4 border-t border-brand-border text-xs text-brand-muted flex items-center justify-between flex-wrap gap-2">
+          <span>これまで手がけた建築実例はこちらからご覧いただけます。</span>
+          <a href="/works/" class="text-brand-accent hover:underline font-medium">
+            WORKS（施工事例一覧） →
+          </a>
+        </div>
+      </section>
+
+      <!-- 事務所概要（h3 構造踏襲） -->
+      <section class="bg-white border border-brand-border rounded-sm p-6 sm:p-8 shadow-sm">
+        <h3 class="text-base sm:text-lg font-serif font-medium text-brand-text pb-3 border-b border-brand-border flex items-center gap-2 mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span>
+          事務所概要
+        </h3>
+
+        <!-- 事務所写真ギャラリー -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+          <div class="space-y-2">
+            <div class="aspect-[3/4] sm:aspect-[4/5] bg-stone-100 rounded-sm overflow-hidden border border-brand-border">
+              <img
+                src="https://jun-arch.com/wp-content/uploads/2020/09/17dbd19fd5858672217a4556e8aa99ab-768x1153.jpg"
+                alt="事務所外観"
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <p class="text-[11px] text-center text-brand-muted">事務所外観</p>
+          </div>
+          <div class="space-y-2">
+            <div class="aspect-[3/4] sm:aspect-[4/5] bg-stone-100 rounded-sm overflow-hidden border border-brand-border">
+              <img
+                src="https://jun-arch.com/wp-content/uploads/2020/09/db376c3d9edd9f5342d15fc7797e169a-768x1152.jpg"
+                alt="打合せ室"
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <p class="text-[11px] text-center text-brand-muted">打合せ室</p>
+          </div>
+        </div>
+        <!-- 会社概要テーブル -->
+        <div class="border-t border-brand-border divide-y divide-brand-border text-xs sm:text-sm">
+          <div class="grid grid-cols-1 md:grid-cols-4 py-4 px-2">
+            <dt class="font-medium text-brand-text md:col-span-1 py-1">事務所名</dt>
+            <dd class="text-brand-muted md:col-span-3 py-1 font-medium text-brand-text">株式会社 加藤淳設計事務所</dd>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-4 py-4 px-2">
+            <dt class="font-medium text-brand-text md:col-span-1 py-1">代表取締役</dt>
+            <dd class="text-brand-muted md:col-span-3 py-1">加藤 淳（Jun Kato）</dd>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-4 py-4 px-2">
+            <dt class="font-medium text-brand-text md:col-span-1 py-1">設立年月</dt>
+            <dd class="text-brand-muted md:col-span-3 py-1 space-y-1">
+              <p>2015年　加藤淳一級建築士事務所 開設</p>
+              <p>2022年　株式会社 加藤淳設計事務所 法人化</p>
+            </dd>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-4 py-4 px-2">
+            <dt class="font-medium text-brand-text md:col-span-1 py-1">TEL / FAX</dt>
+            <dd class="text-brand-muted md:col-span-3 py-1 space-y-1 font-mono">
+              <p>TEL: 025-378-5087</p>
+              <p>FAX: 025-378-6087</p>
+            </dd>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-4 py-4 px-2">
+            <dt class="font-medium text-brand-text md:col-span-1 py-1">E-mail</dt>
+            <dd class="text-brand-muted md:col-span-3 py-1">
+              <a href="mailto:kato@jun-arch.com" class="text-brand-text hover:text-brand-accent hover:underline font-mono">
+                kato@jun-arch.com
+              </a>
+            </dd>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-4 py-4 px-2">
+            <dt class="font-medium text-brand-text md:col-span-1 py-1">SNS</dt>
+            <dd class="text-brand-muted md:col-span-3 py-1 flex items-center gap-4">
+              <a
+                href="https://www.instagram.com/katojun0826/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-brand-accent hover:underline inline-flex items-center gap-1"
+              >
+                Instagram
+                <span class="text-[10px]">↗</span>
+              </a>
+              <a
+                href="https://www.facebook.com/junarch.ngt/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-brand-accent hover:underline inline-flex items-center gap-1"
+              >
+                Facebook
+                <span class="text-[10px]">↗</span>
+              </a>
+            </dd>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-4 py-4 px-2">
+            <dt class="font-medium text-brand-text md:col-span-1 py-1">所在地</dt>
+            <dd class="text-brand-muted md:col-span-3 py-1 space-y-1.5">
+              <p>〒951-8142 新潟県新潟市中央区関屋大川前2-3-8-D</p>
+              <p>
+                <a
+                  href="https://goo.gl/maps/U1bFrBjANJ5FyVx59"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-block text-brand-accent hover:underline font-medium"
+                >
+                  駐車場のご案内（Google MAP） ↗
+                </a>
+              </p>
+            </dd>
+          </div>
+        </div>
+
+        <!-- アクセスマップ・案内写真 -->
+        <div class="mt-8 pt-8 border-t border-brand-border">
+          <h4 class="text-sm font-serif font-medium text-brand-text mb-4">アクセスマップ・駐車場</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="border border-brand-border rounded-sm overflow-hidden bg-stone-100">
+              <img
+                src="https://jun-arch.com/wp-content/uploads/2020/07/地図02-768x485.jpg"
+                alt="アクセスマップ（新潟市中央区関屋大川前2-3-8-D）"
+                class="w-full h-auto object-cover"
+                loading="lazy"
+              />
+            </div>
+            <div class="border border-brand-border rounded-sm overflow-hidden bg-stone-100">
+              <img
+                src="https://jun-arch.com/wp-content/uploads/2020/07/案内写真-768x339.jpg"
+                alt="事務所駐車場 案内写真"
+                class="w-full h-auto object-cover"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </div>
+
+    <!-- お問い合わせCTA -->
+    <div class="text-center bg-brand-surface p-8 border border-brand-border rounded-sm mt-12">
+      <p class="font-serif text-base text-brand-text font-medium mb-2">お気軽にお問い合わせください</p>
+      <p class="text-xs text-brand-muted mb-6">家づくりのご相談、土地探し、リノベーションなど、どんなことでもお気軽にご連絡ください。</p>
       <a
-        href="/"
-        class="inline-block px-8 py-3 bg-brand-surface hover:bg-brand-light border border-brand-border text-brand-text text-xs tracking-widest rounded font-medium transition shadow-sm"
+        href="/contact/"
+        class="inline-block px-10 py-3.5 bg-brand-accent hover:bg-brand-dark text-white font-bold text-xs tracking-widest rounded transition shadow-sm"
       >
-        ← トップページに戻る
+        お問い合わせ・無料相談はこちら
       </a>
     </div>
   </div>

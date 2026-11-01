@@ -11,31 +11,99 @@ const breadcrumbs = [
   <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-4 pb-20">
     <Breadcrumb items={breadcrumbs} />
 
-    <!-- Page Header -->
-    <div class="text-center py-10 md:py-14 border-b border-brand-border mb-10">
+    <!-- Page Header (h1) -->
+    <div class="text-center py-10 md:py-14 border-b border-brand-border mb-12">
       <span class="text-xs font-serif tracking-widest text-brand-accent uppercase block mb-2 font-semibold">Privacy Policy</span>
       <h1 class="text-2xl md:text-3xl font-serif tracking-wider text-brand-text mb-4">
         プライバシーポリシー
       </h1>
       <p class="text-xs md:text-sm text-brand-muted tracking-wider">
-        株式会社加藤淳設計事務所における個人情報の保護方針について
+        株式会社 加藤淳設計事務所における個人情報の保護方針について
       </p>
     </div>
 
-    <!-- コンテンツ枠（ハコ） -->
-    <div class="bg-brand-surface/40 border border-brand-border rounded-sm p-8 md:p-12 text-center text-brand-muted">
-      <p class="font-serif text-sm md:text-base text-brand-text mb-2">【コンテンツ準備中】</p>
-      <p class="text-xs">現行サイトのプライバシーポリシー条項を移植・整備予定です。</p>
+    <!-- ポリシー本文エリア -->
+    <div class="bg-white border border-brand-border rounded-sm p-6 sm:p-10 md:p-12 mb-12 shadow-sm space-y-10 text-xs sm:text-sm text-brand-text leading-relaxed font-sans">
+      <p class="leading-relaxed">
+        株式会社加藤淳設計事務所（以下「当社」）では、個人情報に関する法令およびその他の規範を遵守し、お客様の大切な個人情報の保護に万全を尽くします。
+      </p>
+
+      <!-- 1. 個人情報の収集について (h2 構造踏襲) -->
+      <section class="space-y-3">
+        <h2 class="text-base sm:text-lg font-serif font-medium text-brand-text pb-2 border-b border-brand-border flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span>
+          1. 個人情報の収集について
+        </h2>
+        <p>当社では、次のような場合に必要な範囲で個人情報を収集することがあります。</p>
+        <ul class="list-disc pl-5 space-y-1 text-brand-muted">
+          <li>当社へのお問い合わせ時</li>
+        </ul>
+      </section>
+
+      <!-- 2. 個人情報の利用目的について (h2 構造踏襲) -->
+      <section class="space-y-3">
+        <h2 class="text-base sm:text-lg font-serif font-medium text-brand-text pb-2 border-b border-brand-border flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span>
+          2. 個人情報の利用目的について
+        </h2>
+        <p>当社は、お客様から収集した個人情報を次の目的で利用いたします。</p>
+        <ul class="list-disc pl-5 space-y-1 text-brand-muted">
+          <li>お客様への連絡のため</li>
+          <li>お客様からのお問い合せに対する回答のため</li>
+        </ul>
+      </section>
+
+      <!-- 3. 個人情報の第三者への提供について (h2 構造踏襲) -->
+      <section class="space-y-3">
+        <h2 class="text-base sm:text-lg font-serif font-medium text-brand-text pb-2 border-b border-brand-border flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span>
+          3. 個人情報の第三者への提供について
+        </h2>
+        <p>当社では、お客様より取得した個人情報を第三者に開示または提供することはありません。ただし、次の場合は除きます。</p>
+        <ul class="list-disc pl-5 space-y-1 text-brand-muted">
+          <li>ご本人の同意がある場合</li>
+          <li>官公庁等の公的機関の要請により開示する場合</li>
+          <li>法律の適用を受ける場合</li>
+        </ul>
+      </section>
+
+      <!-- 4. 個人情報の開示、訂正等について (h2 構造踏襲) -->
+      <section class="space-y-3">
+        <h2 class="text-base sm:text-lg font-serif font-medium text-brand-text pb-2 border-b border-brand-border flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span>
+          4. 個人情報の開示、訂正等について
+        </h2>
+        <p>当社は、お客様ご本人からの自己情報の開示、訂正、削除等のお求めがあった場合は、確実に応じます。</p>
+      </section>
+
+      <!-- 5. 個人情報保護に関するお問い合わせ先 (h2 構造踏襲) -->
+      <section class="space-y-3">
+        <h2 class="text-base sm:text-lg font-serif font-medium text-brand-text pb-2 border-b border-brand-border flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span>
+          5. 個人情報保護に関するお問い合わせ先
+        </h2>
+        <div class="bg-brand-surface p-5 rounded-sm border border-brand-border space-y-1.5">
+          <p class="font-medium text-brand-text">株式会社 加藤淳設計事務所</p>
+          <p class="font-mono text-brand-muted">TEL. 025-378-5087 / FAX. 025-378-6087</p>
+          <p class="text-brand-muted">
+            メールでのお問い合わせは「<a href="/contact/" class="text-brand-accent hover:underline font-medium">お問い合わせフォーム</a>」よりお願いいたします。
+          </p>
+          <p class="text-xs text-brand-muted pt-1">受付窓口：加藤</p>
+        </div>
+      </section>
     </div>
 
-    <!-- Back to Top CTA -->
-    <div class="text-center pt-12">
+    <!-- お問い合わせCTA -->
+    <div class="text-center bg-brand-surface p-8 border border-brand-border rounded-sm">
+      <p class="font-serif text-base text-brand-text font-medium mb-2">お気軽にお問い合わせください</p>
+      <p class="text-xs text-brand-muted mb-6">家づくりのご相談、土地探し、リノベーションなど、どんなことでもお気軽にご連絡ください。</p>
       <a
-        href="/"
-        class="inline-block px-8 py-3 bg-brand-surface hover:bg-brand-light border border-brand-border text-brand-text text-xs tracking-widest rounded font-medium transition shadow-sm"
+        href="/contact/"
+        class="inline-block px-10 py-3.5 bg-brand-accent hover:bg-brand-dark text-white font-bold text-xs tracking-widest rounded transition shadow-sm"
       >
-        ← トップページに戻る
+        お問い合わせ・無料相談はこちら
       </a>
     </div>
   </div>
 </Layout>
+
