@@ -49,6 +49,31 @@ const breadcrumbs = [
       </div>
     </div>
 
+    <!-- 見学会・来場予約専用のご案内ブロック（type=reservation 時に表示） -->
+    <div
+      id="thanks-reservation-box"
+      class="hidden bg-brand-light/20 border border-brand-accent/40 rounded-sm p-6 sm:p-8 mb-8 text-xs leading-relaxed"
+    >
+      <h3 class="font-serif font-medium text-sm text-brand-text mb-3 flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span>
+        見学会・来場予約に関するご案内
+      </h3>
+      <ul class="space-y-2 text-brand-text list-disc list-inside">
+        <li>
+          <strong>現時点では予約は確定しておりません</strong>：担当者より日時の確定連絡をもって予約完了となります。
+        </li>
+        <li>
+          <strong>会場の所在地・詳細図</strong>：防犯およびオーナー様のプライバシー保護のため、ご予約確定メールにて個別にご案内いたします。
+        </li>
+        <li>
+          <strong>お子様連れのご来場</strong>：歓迎いたします。オーナー様の大切なお住まいをお借りしての見学会のため、手をつないでのご見学をお願いしております。
+        </li>
+        <li>
+          <strong>時間調整のお願い</strong>：予約制のため、同一時間帯のご希望が重なった場合は日時の調整をお願いする場合がございます。
+        </li>
+      </ul>
+    </div>
+
     <!-- 注意事項・メール不達時のご案内 -->
     <div class="bg-brand-surface border border-brand-border rounded-sm p-6 sm:p-8 mb-8 text-xs leading-relaxed">
       <h3 class="font-serif font-medium text-sm text-brand-text mb-3 flex items-center gap-2">
@@ -109,6 +134,7 @@ const breadcrumbs = [
         var titleEl = document.getElementById('thanks-title');
         var descMainEl = document.getElementById('thanks-desc-main');
         var descSubEl = document.getElementById('thanks-desc-sub');
+        var reservationBoxEl = document.getElementById('thanks-reservation-box');
 
         if (type === 'request') {
           if (leadEl) leadEl.textContent = '資料請求のお申し込みありがとうございます';
@@ -123,14 +149,17 @@ const breadcrumbs = [
           }
         } else if (type === 'reservation') {
           if (leadEl) leadEl.textContent = '見学・来場予約のお申し込みありがとうございます';
-          if (titleEl) titleEl.textContent = 'ご予約のお申し込みを受け付けいたしました';
+          if (titleEl) titleEl.textContent = '見学・来場予約を受け付けいたしました';
           if (descMainEl) {
             descMainEl.textContent =
               'この度は見学・来場予約のお申し込みをいただき、誠にありがとうございます。';
           }
           if (descSubEl) {
             descSubEl.innerHTML =
-              '予約制のため、担当者より<span class="font-medium text-brand-text underline decoration-brand-accent/50 underline-offset-4">2〜3営業日以内</span>に日時の確定または調整のご連絡を改めて差し上げます。';
+              '<strong class="text-brand-text">※現時点では予約は確定しておりません。</strong><br />予約状況を確認の上、担当者より<span class="font-medium text-brand-text underline decoration-brand-accent/50 underline-offset-4">2〜3営業日以内</span>に日時の確定または調整のご連絡を改めて差し上げます。';
+          }
+          if (reservationBoxEl) {
+            reservationBoxEl.classList.remove('hidden');
           }
         } else if (type === 'contact') {
           if (leadEl) leadEl.textContent = 'お問い合わせ・ご相談ありがとうございます';
