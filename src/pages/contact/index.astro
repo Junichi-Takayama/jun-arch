@@ -43,7 +43,18 @@ const breadcrumbs = [{ name: 'CONTACT' }];
 
 
     <!-- Contact Form -->
-    <form class="space-y-6 bg-white border border-brand-border p-6 sm:p-10 shadow-sm rounded-sm">
+    <form
+      action="https://api.web3forms.com/submit"
+      method="POST"
+      class="space-y-6 bg-white border border-brand-border p-6 sm:p-10 shadow-sm rounded-sm"
+    >
+      <!-- Web3Forms 設定用 hidden フィールド（後ほどアクセスキーを接続） -->
+      <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE" />
+      <input type="hidden" name="subject" value="【お問い合わせ】サイトからお問い合わせがありました" />
+      <input type="hidden" name="from_name" value="加藤淳設計事務所 Webサイト" />
+      <input type="hidden" name="redirect" value="https://jun-arch.pages.dev/contact/thanks/" />
+      <!-- スパム防止ハニーポット -->
+      <input type="checkbox" name="botcheck" class="hidden" style="display: none;" />
       <!-- Name -->
       <div>
         <label for="name" class="block text-xs font-medium tracking-wider text-brand-text mb-2">
@@ -139,11 +150,13 @@ const breadcrumbs = [{ name: 'CONTACT' }];
         <label class="flex items-start gap-3 cursor-pointer">
           <input
             type="checkbox"
+            name="privacy"
+            value="同意する"
             required
             class="mt-1 h-4 w-4 border-brand-border text-brand-accent focus:ring-0 cursor-pointer"
           />
-          <span class="text-xs text-brand-muted tracking-wider">
-            当事務所のプライバシーポリシーをお読みいただき、同意の上で送信してください。
+          <span class="text-xs text-brand-muted tracking-wider leading-relaxed">
+            弊社の<a href="/privacy-policy/" target="_blank" rel="noopener noreferrer" class="text-brand-accent hover:underline font-medium">プライバシーポリシー</a>をお読みいただき、同意の上で送信してください。
           </span>
         </label>
       </div>

@@ -1,28 +1,102 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import PageHeader from '../../components/common/PageHeader.astro';
+import Breadcrumb from '../../components/common/Breadcrumb.astro';
+
+const breadcrumbs = [
+  { name: 'CONTACT', href: '/contact/' },
+  { name: '送信完了' }
+];
 ---
 
-<Layout title="送信完了 | ARCH CRAFT STUDIO">
-  <PageHeader 
-    title="THANK YOU" 
-    subTitle="Message Sent Successfully"
-  />
+<Layout title="送信完了 – 株式会社 加藤淳設計事務所">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 pt-4 pb-20">
+    <Breadcrumb items={breadcrumbs} />
 
-  <section class="py-24 px-6 max-w-xl mx-auto text-center space-y-6" data-animate="fade-up">
-    <div class="w-16 h-16 bg-stone-100 rounded-full flex items-center justify-center mx-auto text-stone-800 text-2xl font-bold">
-      ✓
+    <!-- Page Header -->
+    <div class="text-center py-10 md:py-14 border-b border-brand-border mb-8">
+      <span class="text-xs font-serif tracking-widest text-brand-accent uppercase block mb-2 font-semibold">Thank you</span>
+      <h1 class="text-2xl md:text-3xl font-serif tracking-wider text-brand-text mb-4">
+        送信完了
+      </h1>
+      <p class="text-xs md:text-sm text-brand-muted tracking-wider leading-relaxed max-w-xl mx-auto">
+        お問い合わせ・お申し込みありがとうございます
+      </p>
     </div>
-    <h2 class="font-serif-title text-2xl font-medium text-stone-900">お問い合わせありがとうございます</h2>
-    <p class="text-xs md:text-sm text-stone-600 leading-relaxed font-light">
-      ご入力いただいた内容を送信いたしました。<br />
-      担当者より2営業日以内にご連絡させていただきます。
-    </p>
-    <div class="pt-6">
-      <a href="/" class="inline-block px-8 py-3 bg-stone-900 text-white text-xs tracking-widest uppercase font-medium hover:bg-stone-800 transition shadow-sm">
-        トップページへ戻る
-      </a>
+
+    <!-- 完了メッセージカード -->
+    <div class="bg-white border border-brand-border rounded-sm p-8 sm:p-12 shadow-sm text-center mb-8">
+      <!-- チェックアイコン -->
+      <div class="w-14 h-14 rounded-full bg-brand-light/30 border border-brand-accent/40 flex items-center justify-center mx-auto text-brand-dark mb-6">
+        <svg class="w-7 h-7 text-brand-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+
+      <h2 class="text-xl sm:text-2xl font-serif font-medium text-brand-text mb-5">
+        送信を受け付けいたしました
+      </h2>
+
+      <div class="space-y-4 text-xs sm:text-sm text-brand-text leading-relaxed max-w-xl mx-auto font-light">
+        <p>
+          この度は、株式会社加藤淳設計事務所へお問い合わせ・お申し込みいただき、誠にありがとうございます。
+        </p>
+        <p>
+          ご入力いただいたメールアドレス宛に、受付完了の自動返信メールをお送りいたしました。
+        </p>
+        <p class="pt-2">
+          内容を確認の上、担当者より<span class="font-medium text-brand-text underline decoration-brand-accent/50 underline-offset-4">2〜3営業日以内</span>にご連絡・ご対応を差し上げます。
+        </p>
+      </div>
     </div>
-  </section>
+
+    <!-- 注意事項・メール不達時のご案内 -->
+    <div class="bg-brand-surface border border-brand-border rounded-sm p-6 sm:p-8 mb-8 text-xs leading-relaxed">
+      <h3 class="font-serif font-medium text-sm text-brand-text mb-3 flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span>
+        自動返信メールが届かない場合
+      </h3>
+      <p class="text-brand-muted mb-4">
+        数分経過しても自動返信メールが届かない場合、メールアドレスの入力誤りや、迷惑メールフォルダへの振り分け、携帯キャリアのドメイン指定受信設定（受信許可：<strong class="text-brand-text font-medium">@jun-arch.com</strong>）の影響が考えられます。
+      </p>
+      <div class="border-t border-brand-border pt-4 text-brand-muted space-y-1.5">
+        <p class="font-medium text-brand-text">■ お急ぎの場合・メールが届かない場合の連絡先</p>
+        <p>株式会社 加藤淳設計事務所（担当：加藤 淳）</p>
+        <div class="flex flex-wrap gap-x-6 gap-y-1 pt-1">
+          <p>
+            TEL：<a href="tel:0253785087" class="text-brand-text font-medium hover:text-brand-accent underline">025-378-5087</a>
+            <span class="text-[11px] text-brand-muted">（10:00〜18:00 / 水曜定休）</span>
+          </p>
+          <p>
+            E-mail：<a href="mailto:kato@jun-arch.com" class="text-brand-text font-medium hover:text-brand-accent underline">kato@jun-arch.com</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 次の導線（回遊リンク） -->
+    <div class="text-center pt-2 space-y-4">
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a
+          href="/"
+          class="w-full sm:w-auto min-w-[200px] bg-brand-accent hover:bg-brand-dark text-white text-xs tracking-widest px-8 py-3.5 transition-colors font-medium shadow-sm rounded-sm"
+        >
+          トップページへ戻る
+        </a>
+        <a
+          href="/concept/"
+          class="w-full sm:w-auto min-w-[200px] bg-white hover:bg-brand-surface border border-brand-border hover:border-brand-accent text-brand-text hover:text-brand-accent text-xs tracking-widest px-8 py-3.5 transition-colors font-medium shadow-sm rounded-sm"
+        >
+          家づくりについて
+        </a>
+        <a
+          href="/works/"
+          class="w-full sm:w-auto min-w-[200px] bg-white hover:bg-brand-surface border border-brand-border hover:border-brand-accent text-brand-text hover:text-brand-accent text-xs tracking-widest px-8 py-3.5 transition-colors font-medium shadow-sm rounded-sm"
+        >
+          建築実例（WORKS）
+        </a>
+      </div>
+    </div>
+  </div>
 </Layout>
+
 
