@@ -10,8 +10,8 @@ export default {
 					light: '#ecc58a',
 					lighter: '#f8ead5',
 					sub: '#cd162c',
-					text: '#333333',
-					muted: '#666666',
+					text: '#1e1e1e',
+					muted: '#4a4a4a',
 					surface: '#f7f7f7',
 					border: '#eeeeee',
 				},
@@ -20,4 +20,5 @@ export default {
 	},
 	plugins: [],
 }
+
 
