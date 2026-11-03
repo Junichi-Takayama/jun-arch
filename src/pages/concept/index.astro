@@ -1,0 +1,572 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/common/Breadcrumb.astro';
+
+const breadcrumbs = [{ name: '家づくりについて' }];
+
+// 住宅7原則データ
+const principles = [
+  {
+    num: '01',
+    title: '外観はシンプルに',
+    image: '/images/concept/principle-01-simple-facade.png',
+    alt: '住宅7原則 01 外観はシンプルに'
+  },
+  {
+    num: '02',
+    title: '立体的に空間を繋ぐ',
+    image: '/images/concept/principle-02-spatial-connection.png',
+    alt: '住宅7原則 02 立体的に空間を繋ぐ'
+  },
+  {
+    num: '03',
+    title: '内外の境界を曖昧に',
+    image: '/images/concept/principle-03-indoor-outdoor.png',
+    alt: '住宅7原則 03 内外の境界を曖昧に'
+  },
+  {
+    num: '04',
+    title: '高窓で光を操る',
+    image: '/images/concept/principle-04-high-window-light.png',
+    alt: '住宅7原則 04 高窓で光を操る'
+  },
+  {
+    num: '05',
+    title: '西日を活かす',
+    image: '/images/concept/principle-05-west-sunlight.png',
+    alt: '住宅7原則 05 西日を活かす'
+  },
+  {
+    num: '06',
+    title: '引き戸で仕切る',
+    image: '/images/concept/principle-06-sliding-doors.png',
+    alt: '住宅7原則 06 引き戸で仕切る'
+  },
+  {
+    num: '07',
+    title: '小さな書斎をつくる',
+    image: '/images/concept/principle-07-small-den.png',
+    alt: '住宅7原則 07 小さな書斎をつくる'
+  }
+];
+
+// 家づくりの流れ（7ステップ）
+const flowSteps = [
+  {
+    step: '1',
+    title: 'ご相談',
+    lead: '土地が決まっていない状態でも大丈夫です。',
+    desc: '家へのイメージを具体的にするために、「設計カルテ」を書いていただいています。たくさんご希望を聞かせてください。「そこまでじゃなくて、まずは話だけ…」という方も歓迎です。'
+  },
+  {
+    step: '2',
+    title: '土地の決定',
+    lead: '提携の不動産会社と協力し、土地探しからお手伝い。',
+    desc: 'ご希望の方には提携している不動産会社と協力し、土地探しからお手伝いします。下見に同行し、アドバイスをすることも可能です。'
+  },
+  {
+    step: '3',
+    title: '建物プラン(仮)',
+    lead: '初回プランとおおよそのお見積りを作成。',
+    desc: 'ご希望を土地に合わせた初回プランを作成します。おおよそのお見積りもこの時にお渡しできます（決定ではありません）。プラン決定ではなく、予算・希望・生活の感覚に合わせてブラッシュアップしていきます。'
+  },
+  {
+    step: '4',
+    title: '設計契約',
+    lead: 'パートナーとしてご信頼いただけましたら契約となります。',
+    desc: '家づくりのパートナーとしてご信頼をいただけましたら、設計契約となります。ここから詳細なお打合せのはじまりです。注文住宅はひとつひとつ全てを決めるので大変ですが、楽しんでいきましょう。'
+  },
+  {
+    step: '5',
+    title: '工事開始',
+    lead: '実際の工事に着手。お客様の代理として監理に入ります。',
+    desc: '実際の工事に着手します。コンセントや内装など、工事と並行で確定する仕様を引き続きお打合せしていきます。工事が設計通りに行われているか、弊社がお客様の代理として監理にはいります。'
+  },
+  {
+    step: '6',
+    title: 'お引渡し',
+    lead: 'ついに完成！新しい住まいのお引渡しです。',
+    desc: 'ついに完成です！設備のご説明をさせていただき、新しい住まいのお引渡しとなります。'
+  },
+  {
+    step: '7',
+    title: 'アフターフォロー',
+    lead: 'ここから本当のお付き合いがはじまります。',
+    desc: '安心して過ごしていただくために、定期点検もおこなっております。家の疑問やお困りごと、新たな夢があればいつでもご連絡ください。ここから加藤淳設計事務所とあなたの本当のお付き合いがはじまります。'
+  }
+];
+---
+
+<Layout
+  title="加藤淳設計事務所の家づくり – 株式会社 加藤淳設計事務所"
+  description="居心地のいい自然な美しさの住まいに暮らす。楽しさ続く後悔しない家づくりをお約束します。耐震等級3、断熱基準HEAT20 G1/G2、パッシブ設計、コストコントロールなど。"
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-4 pb-20">
+    <Breadcrumb items={breadcrumbs} />
+
+    <!-- ページヘッダー -->
+    <header class="text-center py-10 md:py-14 border-b border-brand-border">
+      <span class="text-xs font-serif tracking-widest text-brand-accent uppercase block mb-2 font-semibold">Concept</span>
+      <h1 class="text-2xl md:text-3xl font-serif tracking-wider text-brand-text mb-4">
+        加藤淳設計事務所の家づくり
+      </h1>
+      <p class="text-xs md:text-sm text-brand-muted tracking-wider">
+        居心地のいい自然な美しさの住まいに暮らす。楽しさ続く後悔しない家づくりのこだわり
+      </p>
+    </header>
+
+    <!-- メインビジュアル ＆ キャッチコピー -->
+    <section class="py-10 md:py-14 border-b border-brand-border">
+      <div class="rounded-sm overflow-hidden border border-brand-border shadow-sm mb-8 bg-stone-100">
+        <img
+          src="/images/concept/concept-main.jpg"
+          alt="加藤淳設計事務所の家づくり 居心地のいい自然な美しさの住まい"
+          class="w-full h-auto object-cover"
+          loading="eager"
+        />
+      </div>
+
+      <div class="text-center max-w-2xl mx-auto">
+        <h2 class="text-xl md:text-2xl font-serif font-medium tracking-wide text-brand-text leading-relaxed mb-6">
+          居心地のいい自然な美しさの住まいに暮らす<br />
+          <span class="text-brand-accent">楽しさ続く後悔しない家づくり</span>をお約束します
+        </h2>
+
+        <!-- ページ内目次アンカー -->
+        <nav aria-label="ページ内目次" class="inline-flex flex-wrap items-center justify-center gap-3 sm:gap-6 bg-brand-surface border border-brand-border rounded-sm px-6 py-4 text-xs sm:text-sm font-serif">
+          <a href="#promise" class="text-brand-text hover:text-brand-accent flex items-center gap-1 transition">
+            <span class="text-brand-accent">→</span> オーナー様へ3つのお約束
+          </a>
+          <a href="#promise3" class="text-brand-text hover:text-brand-accent flex items-center gap-1 transition">
+            <span class="text-brand-accent">→</span> コストについて
+          </a>
+          <a href="#flow" class="text-brand-text hover:text-brand-accent flex items-center gap-1 transition">
+            <span class="text-brand-accent">→</span> 家づくりの流れ
+          </a>
+        </nav>
+      </div>
+    </section>
+
+    <!-- 設計思想 ＆ 住宅7原則 -->
+    <section class="py-12 md:py-16 border-b border-brand-border">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <p class="text-base sm:text-lg font-serif text-brand-text tracking-wider leading-relaxed mb-4">
+          優れた建築のデザインとは<br />
+          見た目の良さはもちろん、<br />
+          そこで暮らす家族の生活を便利に楽しくにするものです
+        </p>
+        <p class="text-xs sm:text-sm text-brand-muted tracking-wider leading-relaxed">
+          100棟以上の建築に携わった経験をもとに、<br />
+          合理的で心地よい空間を作り出すための独自の原則を設けています
+        </p>
+      </div>
+
+      <!-- 住宅7原則 見出しバナー -->
+      <div class="text-center mb-8">
+        <img
+          src="/images/concept/seven-principles-heading.png"
+          alt="あなたのライフスタイル住まいへの夢×住宅7原則"
+          class="h-10 sm:h-12 w-auto mx-auto object-contain"
+          loading="lazy"
+        />
+        <h3 class="sr-only">住宅7原則</h3>
+      </div>
+
+      <!-- 住宅7原則 アイコングリッド -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
+        {principles.map((item) => (
+          <div class="bg-white border border-brand-border rounded-sm p-3 sm:p-4 text-center shadow-xs hover:shadow-sm transition">
+            <div class="aspect-square w-full mb-3 overflow-hidden rounded-xs bg-stone-50 flex items-center justify-center">
+              <img
+                src={item.image}
+                alt={item.alt}
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <span class="text-[10px] font-mono tracking-widest text-brand-accent uppercase block font-semibold mb-1">
+              PRINCIPLE {item.num}
+            </span>
+            <p class="text-xs sm:text-sm font-serif font-medium text-brand-text">
+              {item.title}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+
+    <!-- オーナー様へ3つのお約束 -->
+    <section id="promise" class="py-12 md:py-16 border-b border-brand-border scroll-mt-20">
+      <div class="text-center mb-12">
+        <span class="text-xs font-serif tracking-widest text-brand-accent uppercase block mb-2 font-semibold">Our Promises</span>
+        <h2 class="text-xl md:text-2xl font-serif tracking-wider text-brand-text">
+          理想の家づくりのために、オーナー様へ３つのお約束
+        </h2>
+      </div>
+
+      <div class="space-y-12">
+        <!-- PROMISE 1 -->
+        <article class="bg-white border border-brand-border rounded-sm p-6 sm:p-8 md:p-10 shadow-sm">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="px-2.5 py-0.5 bg-brand-accent text-white text-[11px] font-mono font-medium rounded-xs">
+              PROMISE 01
+            </span>
+            <span class="text-xs font-serif text-brand-muted tracking-widest">安心性能</span>
+          </div>
+
+          <h3 class="text-lg sm:text-xl font-serif font-medium text-brand-text tracking-wider mb-4">
+            耐震等級3のデザイン住宅。家族と暮らしの安心性能
+          </h3>
+
+          <p class="text-xs sm:text-sm text-brand-muted tracking-wider leading-relaxed mb-6">
+            加藤淳設計事務所では、快適な住まいに必要な性能を、根拠をもって設計。<br />
+            <strong class="text-brand-text font-medium">家族の健康と安全を守ることが住まいの最大の役割</strong>と考えています。
+          </p>
+
+          <!-- 実例写真ギャラリー（3枚） -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6">
+            <div class="aspect-square rounded-xs overflow-hidden border border-brand-border bg-stone-100">
+              <img
+                src="/images/concept/promise-01-living.png"
+                alt="自然光と心地よい風が通り抜けるリビング空間"
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <div class="aspect-square rounded-xs overflow-hidden border border-brand-border bg-stone-100">
+              <img
+                src="/images/concept/promise-01-staircase.png"
+                alt="開放的な吹き抜けと美しい木製スチール階段"
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <div class="aspect-square rounded-xs overflow-hidden border border-brand-border bg-stone-100">
+              <img
+                src="/images/concept/promise-01-dining.png"
+                alt="木のぬくもりを感じる落ち着きのあるダイニングキッチン"
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <!-- 性能詳細解説 ＆ ブログリンク -->
+          <div class="bg-brand-surface p-5 sm:p-6 rounded-sm border border-brand-border space-y-4 text-xs sm:text-sm text-brand-text leading-relaxed">
+            <div>
+              <p class="font-serif font-medium mb-1">
+                耐震等級3は建築基準法の1.5倍の強度
+              </p>
+              <p class="text-brand-muted text-xs leading-relaxed">
+                ※等級3は、消防署や警察署など防災の拠点となる建物の耐震基準。学校や病院より厳しい基準です。<br />
+                なぜ耐震等級3にこだわるのか、ブログで詳しくお伝えしています。
+                <a
+                  href="https://junarch.exblog.jp/30087885/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-brand-accent underline hover:opacity-80 inline-flex items-center gap-0.5 ml-1 font-medium"
+                >
+                  詳しくはこちら →
+                </a>
+              </p>
+            </div>
+
+            <div class="border-t border-brand-border pt-4">
+              <p class="font-serif font-medium mb-1">
+                断熱基準HEAT20「G1」「G2」は北海道水準の断熱・省エネ性能
+              </p>
+              <p class="text-brand-muted text-xs leading-relaxed">
+                気密性はC＝0.5未満（※プランニングや工法によります）。<br />
+                この数値はもっと追求できますが、景観や過ごしやすさも性能と考え、両立する数値として基準としています。
+              </p>
+            </div>
+          </div>
+
+          <!-- 性能カード 3カラム -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
+            <div class="bg-white p-3 text-center border border-brand-border rounded-xs">
+              <span class="text-[11px] text-brand-muted block mb-0.5">耐震性能</span>
+              <span class="text-sm font-serif font-medium text-brand-text">耐震等級 3</span>
+              <span class="text-[10px] text-brand-muted block mt-0.5">消防署・警察署と同等</span>
+            </div>
+            <div class="bg-white p-3 text-center border border-brand-border rounded-xs">
+              <span class="text-[11px] text-brand-muted block mb-0.5">断熱性能</span>
+              <span class="text-sm font-serif font-medium text-brand-text">HEAT20 G1 / G2</span>
+              <span class="text-[10px] text-brand-muted block mt-0.5">北海道水準の省エネ</span>
+            </div>
+            <div class="bg-white p-3 text-center border border-brand-border rounded-xs">
+              <span class="text-[11px] text-brand-muted block mb-0.5">気密性能</span>
+              <span class="text-sm font-serif font-medium text-brand-text">C値 0.5 未満</span>
+              <span class="text-[10px] text-brand-muted block mt-0.5">景観と快適性を両立</span>
+            </div>
+          </div>
+        </article>
+
+
+        <!-- PROMISE 2 -->
+        <article id="promise2" class="bg-white border border-brand-border rounded-sm p-6 sm:p-8 md:p-10 shadow-sm scroll-mt-20">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="px-2.5 py-0.5 bg-brand-accent text-white text-[11px] font-mono font-medium rounded-xs">
+              PROMISE 02
+            </span>
+            <span class="text-xs font-serif text-brand-muted tracking-widest">長く喜びが続く</span>
+          </div>
+
+          <h3 class="text-lg sm:text-xl font-serif font-medium text-brand-text tracking-wider mb-4">
+            長く喜びが続く家
+          </h3>
+
+          <p class="text-xs sm:text-sm text-brand-muted tracking-wider leading-relaxed mb-4">
+            私たちのつくる「住まいのピーク」は、新築完成時ではありません。
+          </p>
+
+          <ul class="space-y-2 mb-6 text-xs sm:text-sm text-brand-text">
+            <li class="flex items-start gap-2">
+              <span class="text-brand-accent mt-0.5">・</span>
+              <span>家族の成長や生活の変化に対応する<strong class="font-medium text-brand-text">フレキシブルな空間</strong></span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-brand-accent mt-0.5">・</span>
+              <span><strong class="font-medium text-brand-text">古びていくのではなく、味が出る自然の素材</strong></span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-brand-accent mt-0.5">・</span>
+              <span><strong class="font-medium text-brand-text">家事が楽に、楽しくなる</strong>家事動線や回遊性</span>
+            </li>
+          </ul>
+
+          <p class="text-xs sm:text-sm text-brand-muted tracking-wider leading-relaxed mb-6">
+            そんな暮らすほどに快適さが増す家を作ります。<br />
+            そんな快適さをもたらすために、敷地や周辺の環境、採光や風の抜け。<br />
+            想像ではなく、<strong class="text-brand-text font-medium">1日・1年の太陽の動きを確かめてプランニング</strong>。<br />
+            変形敷地や、高低差も住まいの個性として活かしていきます。
+          </p>
+
+          <div class="bg-brand-surface p-5 sm:p-6 rounded-sm border border-brand-border">
+            <p class="text-xs font-serif font-medium text-brand-text tracking-wider mb-3">
+              土地の個性を活かした心地よい暮らし：
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs text-brand-text">
+              <div class="flex items-center gap-2">
+                <span class="text-brand-accent font-bold">✔</span>
+                <span>夏の暑さ、冬の寒さが辛くない</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-brand-accent font-bold">✔</span>
+                <span>通年を通して自然な明るさの中で暮らせる</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-brand-accent font-bold">✔</span>
+                <span>周りの建物の窓や目線に重ならない</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-brand-accent font-bold">✔</span>
+                <span>理想の土地を予算を抑えてみつける可能性アップ</span>
+              </div>
+            </div>
+            <p class="text-xs text-brand-muted mt-3 pt-3 border-t border-brand-border">
+              そんな「土地の魅力」を活かした家を作ります。
+            </p>
+          </div>
+        </article>
+
+
+        <!-- PROMISE 3 -->
+        <article id="promise3" class="bg-white border border-brand-border rounded-sm p-6 sm:p-8 md:p-10 shadow-sm scroll-mt-20">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="px-2.5 py-0.5 bg-brand-accent text-white text-[11px] font-mono font-medium rounded-xs">
+              PROMISE 03
+            </span>
+            <span class="text-xs font-serif text-brand-muted tracking-widest">楽しむ家づくり</span>
+          </div>
+
+          <h3 class="text-lg sm:text-xl font-serif font-medium text-brand-text tracking-wider mb-4">
+            一緒に楽しい家づくりをしましょう
+          </h3>
+
+          <div class="text-xs sm:text-sm text-brand-muted tracking-wider leading-relaxed space-y-3 mb-6">
+            <p>
+              一般に「注文住宅は、建築費用が高い…」と思われがち。<br />
+              初期見積もりが高く、予算にあわせてどんどん希望を削ぎ落すのは憂鬱ですよね。<br />
+              私自身、自宅を設計する時に痛感しました。
+            </p>
+            <p>
+              だからこそ私たちは、<strong class="text-brand-text font-medium">家づくりの楽しさ</strong>を大切にしています。<br />
+              素材の工夫や現場との意見交換、予算のメリハリをつけて<strong class="text-brand-text font-medium">パズルのようにコストコントロール</strong>をして希望を実現していきます。
+            </p>
+          </div>
+
+          <!-- コストパフォーマンス バナー -->
+          <div class="my-6 text-center">
+            <img
+              src="/images/concept/cost-performance-banner.png"
+              alt="コストパフォーマンスとデザイン性を両立する設計"
+              class="max-w-md w-full mx-auto h-auto object-contain rounded-xs"
+              loading="lazy"
+            />
+          </div>
+
+          <!-- 希望の形だけでなく願いを大切に -->
+          <div class="bg-brand-surface p-5 sm:p-6 rounded-sm border border-brand-border">
+            <h4 class="text-sm font-serif font-medium text-brand-text tracking-wider mb-3">
+              希望の「形」だけではなく「願い」を大切にします
+            </h4>
+            <div class="text-xs sm:text-sm text-brand-muted tracking-wider leading-relaxed space-y-2">
+              <p>
+                大きな窓が欲しい、ウォークインクローゼットが欲しい。<br />
+                それをただ組み立てていく「御用聞き」のような設計ではなく、<br />
+                <strong class="text-brand-text font-medium">「どうして、あなたがそれを欲しいと思ったのか」</strong>を大切にしています。
+              </p>
+              <p class="pt-2 text-brand-text">
+                建てた後「思っていたのとちがう」という悲劇を防ぎ、お金のかかる夢や家族で意見が合わないことも、形にできる可能性が生まれていきます。
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+
+    <!-- 立体的な設計から生まれる心地よい光と風（代表メッセージセクション） -->
+    <section class="py-12 md:py-16 border-b border-brand-border">
+      <div class="bg-white border border-brand-border rounded-sm p-6 sm:p-8 md:p-10 shadow-sm">
+        <h2 class="text-lg sm:text-xl md:text-2xl font-serif font-medium text-brand-text tracking-wide text-center leading-relaxed mb-8">
+          立体的な設計から生まれる、心地よい光と風<br />
+          <span class="text-brand-accent">何気ない家時間を特別なくつろぎのひとときに</span>
+        </h2>
+
+        <!-- 加藤代表の写真 -->
+        <div class="rounded-sm overflow-hidden border border-brand-border shadow-sm mb-8 bg-stone-100 max-w-2xl mx-auto">
+          <img
+            src="/images/concept/architect-jun-kato.jpg"
+            alt="株式会社 加藤淳設計事務所 代表取締役 一級建築士 加藤 淳"
+            class="w-full h-auto object-cover"
+            loading="lazy"
+          />
+        </div>
+
+        <!-- チェックリスト 5項目 -->
+        <div class="bg-brand-surface p-5 sm:p-6 rounded-sm border border-brand-border max-w-2xl mx-auto mb-8">
+          <ul class="space-y-2.5 text-xs sm:text-sm text-brand-text">
+            <li class="flex items-start gap-2.5">
+              <span class="text-brand-accent font-bold">✔</span>
+              <span><strong class="font-medium text-brand-text">寒さ・暑さ・地震に強い家</strong>でずっと快適に暮らす</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="text-brand-accent font-bold">✔</span>
+              <span>憧れや夢を予算だけで、切り捨てない</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="text-brand-accent font-bold">✔</span>
+              <span>美しく、それでいて<strong class="font-medium text-brand-text">くつろげる機能的なデザイン</strong></span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="text-brand-accent font-bold">✔</span>
+              <span><strong class="font-medium text-brand-text">実践に基づく家事動線</strong>で、ストレスフリー</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="text-brand-accent font-bold">✔</span>
+              <span>立体的なプランで、<strong class="font-medium text-brand-text">土地と家の魅力を最大化</strong></span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="text-center max-w-xl mx-auto space-y-4">
+          <p class="text-xs sm:text-sm text-brand-muted tracking-wider leading-relaxed">
+            あなたがこんな家づくりをしたいと思われたなら、加藤淳設計事務所にお任せください。
+          </p>
+          <p class="text-sm sm:text-base font-serif font-medium text-brand-text tracking-wider">
+            初回プランは無料です。ぜひ一度、あなたの夢を聞かせてください。
+          </p>
+          <div class="pt-4">
+            <a
+              href="/contact/"
+              class="inline-block px-8 py-3.5 bg-brand-accent hover:bg-brand-dark text-white text-xs sm:text-sm tracking-wider rounded font-medium transition shadow-sm"
+            >
+              お気軽にお問い合わせください →
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 家づくりの流れ -->
+    <section id="flow" class="py-12 md:py-16 border-b border-brand-border scroll-mt-20">
+      <div class="text-center mb-12">
+        <span class="text-xs font-serif tracking-widest text-brand-accent uppercase block mb-2 font-semibold">Workflow</span>
+        <h2 class="text-xl md:text-2xl font-serif tracking-wider text-brand-text mb-4">
+          家づくりの流れ
+        </h2>
+        <p class="text-xs sm:text-sm text-brand-muted tracking-wider leading-relaxed max-w-xl mx-auto">
+          家づくりの流れは、実は人それぞれです。<br />
+          先にご契約いただいて、一緒に長期間土地を探すこともありますし、土地の決定前に、仮のプランを先におつくりしてご契約いただくこともあります。<br />
+          ここでは代表的な流れをご紹介します。
+        </p>
+      </div>
+
+      <!-- 7ステップ タイムラインカード -->
+      <div class="relative border-l-2 border-brand-border ml-4 sm:ml-8 pl-6 sm:pl-10 space-y-8">
+        {flowSteps.map((item) => (
+          <div class="relative group">
+            <!-- タイムラインバッジ -->
+            <div class="absolute -left-[35px] sm:-left-[51px] top-0 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white border-2 border-brand-accent flex items-center justify-center shadow-xs">
+              <span class="text-[10px] sm:text-xs font-mono font-bold text-brand-accent">
+                {item.step}
+              </span>
+            </div>
+
+            <!-- ステップカード -->
+            <div class="bg-white border border-brand-border rounded-sm p-5 sm:p-6 shadow-xs hover:shadow-sm transition">
+              <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 mb-2">
+                <span class="text-xs font-mono font-semibold text-brand-accent tracking-widest">
+                  STEP {item.step}
+                </span>
+                <h3 class="text-base sm:text-lg font-serif font-medium text-brand-text tracking-wide">
+                  {item.title}
+                </h3>
+              </div>
+              <p class="text-xs font-medium text-brand-accent tracking-wider mb-2">
+                {item.lead}
+              </p>
+              <p class="text-xs sm:text-sm text-brand-muted tracking-wider leading-relaxed">
+                {item.desc}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- よくある質問導線 -->
+      <div class="mt-12 bg-brand-surface border border-brand-border rounded-sm p-6 sm:p-8 text-center max-w-2xl mx-auto">
+        <p class="text-xs sm:text-sm text-brand-text tracking-wider mb-4">
+          よくあるご質問をまとめています。あわせてご覧ください。
+        </p>
+        <a
+          href="/qa/"
+          class="inline-block px-7 py-3 bg-white hover:bg-stone-50 border border-brand-border text-brand-text text-xs tracking-wider rounded font-medium transition shadow-xs"
+        >
+          よくある質問 →
+        </a>
+      </div>
+    </section>
+
+    <!-- 下部お問い合わせCTA -->
+    <section class="mt-12 p-8 sm:p-10 bg-brand-surface border border-brand-border text-center rounded-sm">
+      <h3 class="text-base sm:text-lg font-serif font-medium text-brand-text mb-3">
+        初回プランのご提案は無料です。ぜひ一度、あなたの夢をお聞かせください。
+      </h3>
+      <p class="text-xs sm:text-sm text-brand-muted tracking-wider mb-6 max-w-lg mx-auto">
+        具体的な土地や時期が決まっていなくても大丈夫です。まずはお気軽にご相談ください。
+      </p>
+      <a
+        href="/contact/"
+        class="inline-block px-8 py-3 bg-brand-accent hover:bg-brand-dark text-white text-xs tracking-wider rounded font-medium transition shadow-sm"
+      >
+        家づくりのご相談・お問い合わせ →
+      </a>
+    </section>
+  </div>
+</Layout>
+
