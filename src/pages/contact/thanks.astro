@@ -18,7 +18,7 @@ const breadcrumbs = [
       <h1 class="text-2xl md:text-3xl font-serif tracking-wider text-brand-text mb-4">
         送信完了
       </h1>
-      <p class="text-xs md:text-sm text-brand-muted tracking-wider leading-relaxed max-w-xl mx-auto">
+      <p id="thanks-lead" class="text-xs md:text-sm text-brand-muted tracking-wider leading-relaxed max-w-xl mx-auto">
         お問い合わせ・お申し込みありがとうございます
       </p>
     </div>
@@ -32,18 +32,18 @@ const breadcrumbs = [
         </svg>
       </div>
 
-      <h2 class="text-xl sm:text-2xl font-serif font-medium text-brand-text mb-5">
+      <h2 id="thanks-title" class="text-xl sm:text-2xl font-serif font-medium text-brand-text mb-5">
         送信を受け付けいたしました
       </h2>
 
       <div class="space-y-4 text-xs sm:text-sm text-brand-text leading-relaxed max-w-xl mx-auto font-light">
-        <p>
+        <p id="thanks-desc-main">
           この度は、株式会社加藤淳設計事務所へお問い合わせ・お申し込みいただき、誠にありがとうございます。
         </p>
         <p>
           ご入力いただいたメールアドレス宛に、受付完了の自動返信メールをお送りいたしました。
         </p>
-        <p class="pt-2">
+        <p id="thanks-desc-sub" class="pt-2">
           内容を確認の上、担当者より<span class="font-medium text-brand-text underline decoration-brand-accent/50 underline-offset-4">2〜3営業日以内</span>にご連絡・ご対応を差し上げます。
         </p>
       </div>
@@ -97,6 +97,67 @@ const breadcrumbs = [
       </div>
     </div>
   </div>
+
+  <script is:inline>
+    // クエリパラメータ（?type=xxx または ?cv=xxx）による出し分けとCV計測
+    (function () {
+      try {
+        var params = new URLSearchParams(window.location.search);
+        var type = params.get('cv') || params.get('type');
+
+        var leadEl = document.getElementById('thanks-lead');
+        var titleEl = document.getElementById('thanks-title');
+        var descMainEl = document.getElementById('thanks-desc-main');
+        var descSubEl = document.getElementById('thanks-desc-sub');
+
+        if (type === 'request') {
+          if (leadEl) leadEl.textContent = '資料請求のお申し込みありがとうございます';
+          if (titleEl) titleEl.textContent = '資料請求を受け付けいたしました';
+          if (descMainEl) {
+            descMainEl.textContent =
+              'この度は、株式会社加藤淳設計事務所へ資料をご請求いただき、誠にありがとうございます。';
+          }
+          if (descSubEl) {
+            descSubEl.innerHTML =
+              '内容を確認の上、担当者より順次資料を発送させていただきます。お手元に届くまで、今しばらくお待ちくださいますようお願い申し上げます。';
+          }
+        } else if (type === 'reservation') {
+          if (leadEl) leadEl.textContent = '見学・来場予約のお申し込みありがとうございます';
+          if (titleEl) titleEl.textContent = 'ご予約のお申し込みを受け付けいたしました';
+          if (descMainEl) {
+            descMainEl.textContent =
+              'この度は見学・来場予約のお申し込みをいただき、誠にありがとうございます。';
+          }
+          if (descSubEl) {
+            descSubEl.innerHTML =
+              '予約制のため、担当者より<span class="font-medium text-brand-text underline decoration-brand-accent/50 underline-offset-4">2〜3営業日以内</span>に日時の確定または調整のご連絡を改めて差し上げます。';
+          }
+        } else if (type === 'contact') {
+          if (leadEl) leadEl.textContent = 'お問い合わせ・ご相談ありがとうございます';
+          if (titleEl) titleEl.textContent = 'お問い合わせを受け付けいたしました';
+          if (descMainEl) {
+            descMainEl.textContent =
+              'この度は、株式会社加藤淳設計事務所へお問い合わせいただき、誠にありがとうございます。';
+          }
+          if (descSubEl) {
+            descSubEl.innerHTML =
+              '内容を確認の上、担当者より<span class="font-medium text-brand-text underline decoration-brand-accent/50 underline-offset-4">2〜3営業日以内</span>にご連絡・ご対応を差し上げます。';
+          }
+        }
+
+        // GA4 / GTM / 各種広告媒体用の dataLayer カスタムイベント送信
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'conversion_thanks_view',
+          conversion_type: type || 'general',
+          form_type: type || 'general',
+          cv_type: type || 'general'
+        });
+      } catch (e) {
+        // フォールバック（静的HTMLのデフォルト文面が維持される）
+      }
+    })();
+  </script>
 </Layout>
 
 
