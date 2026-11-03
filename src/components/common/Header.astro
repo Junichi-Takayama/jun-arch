@@ -3,7 +3,8 @@ interface Props {
   activePath?: string;
 }
 
-const { activePath = '/' } = Astro.props;
+const currentPath = Astro.props.activePath ?? Astro.url.pathname;
+const normalizedPath = currentPath.endsWith('/') && currentPath.length > 1 ? currentPath.slice(0, -1) : currentPath;
 
 const conceptSubItems = [
   { name: '家づくりについて', href: '/concept/' },
@@ -18,8 +19,14 @@ const contactSubItems = [
   { name: 'プライバシーポリシー', href: '/privacy-policy/' },
 ];
 
-const isConceptActive = activePath.startsWith('/concept') || activePath.startsWith('/message') || activePath.startsWith('/aboutus') || activePath.startsWith('/media');
-const isContactActive = activePath.startsWith('/contact') || activePath.startsWith('/privacy-policy');
+const isHomeActive = normalizedPath === '' || normalizedPath === '/';
+const isNewsActive = normalizedPath.startsWith('/news');
+const isConceptActive = normalizedPath.startsWith('/concept') || normalizedPath.startsWith('/message') || normalizedPath.startsWith('/aboutus') || normalizedPath.startsWith('/media');
+const isOwnerInterviewActive = normalizedPath.startsWith('/owner-interview');
+const isWorksActive = normalizedPath.startsWith('/works');
+const isBlogActive = normalizedPath.startsWith('/blog');
+const isQaActive = normalizedPath.startsWith('/qa');
+const isContactActive = normalizedPath.startsWith('/contact') || normalizedPath.startsWith('/privacy-policy');
 ---
 
 <header class="bg-white/95 backdrop-blur-md border-b border-brand-border sticky top-0 z-50 transition-all duration-300">
@@ -28,7 +35,7 @@ const isContactActive = activePath.startsWith('/contact') || activePath.startsWi
     <div class="flex items-center justify-between w-full md:w-auto">
       <h1 class="m-0 leading-none">
         <a href="/" class="flex flex-col group">
-          <span class="text-[10px] tracking-[0.25em] text-brand-muted font-sans font-normal">技術の先にある、いごこちを</span>
+          <span class="text-[10px] tracking-[0.25em] text-brand-muted font-sans font-normal group-hover:text-brand-accent transition-colors">技術の先にある、いごこちを</span>
           <span class="font-serif text-base md:text-lg tracking-[0.18em] font-medium text-brand-text group-hover:text-brand-accent transition-colors">
             株式会社 加藤淳設計事務所
           </span>
@@ -52,7 +59,7 @@ const isContactActive = activePath.startsWith('/contact') || activePath.startsWi
       <a
         href="/"
         class={`py-1 transition-colors hover:text-brand-accent ${
-          activePath === '/' ? 'text-brand-accent font-semibold border-b-2 border-brand-accent' : 'text-brand-muted'
+          isHomeActive ? 'text-brand-accent font-semibold border-b-2 border-brand-accent' : 'text-brand-muted'
         }`}
       >
         TOP
@@ -61,7 +68,7 @@ const isContactActive = activePath.startsWith('/contact') || activePath.startsWi
       <a
         href="/news/"
         class={`py-1 transition-colors hover:text-brand-accent ${
-          activePath.startsWith('/news') ? 'text-brand-accent font-semibold border-b-2 border-brand-accent' : 'text-brand-muted'
+          isNewsActive ? 'text-brand-accent font-semibold border-b-2 border-brand-accent' : 'text-brand-muted'
         }`}
       >
         NEWS
@@ -98,7 +105,7 @@ const isContactActive = activePath.startsWith('/contact') || activePath.startsWi
       <a
         href="/owner-interview/"
         class={`py-1 transition-colors hover:text-brand-accent ${
-          activePath.startsWith('/owner-interview') ? 'text-brand-accent font-semibold border-b-2 border-brand-accent' : 'text-brand-muted'
+          isOwnerInterviewActive ? 'text-brand-accent font-semibold border-b-2 border-brand-accent' : 'text-brand-muted'
         }`}
       >
         オーナーインタビュー
@@ -107,7 +114,7 @@ const isContactActive = activePath.startsWith('/contact') || activePath.startsWi
       <a
         href="/works/"
         class={`py-1 transition-colors hover:text-brand-accent ${
-          activePath.startsWith('/works') ? 'text-brand-accent font-semibold border-b-2 border-brand-accent' : 'text-brand-muted'
+          isWorksActive ? 'text-brand-accent font-semibold border-b-2 border-brand-accent' : 'text-brand-muted'
         }`}
       >
         WORKS一覧
@@ -116,7 +123,7 @@ const isContactActive = activePath.startsWith('/contact') || activePath.startsWi
       <a
         href="/blog/"
         class={`py-1 transition-colors hover:text-brand-accent ${
-          activePath.startsWith('/blog') ? 'text-brand-accent font-semibold border-b-2 border-brand-accent' : 'text-brand-muted'
+          isBlogActive ? 'text-brand-accent font-semibold border-b-2 border-brand-accent' : 'text-brand-muted'
         }`}
       >
         BLOG
@@ -125,7 +132,7 @@ const isContactActive = activePath.startsWith('/contact') || activePath.startsWi
       <a
         href="/qa/"
         class={`py-1 transition-colors hover:text-brand-accent ${
-          activePath.startsWith('/qa') ? 'text-brand-accent font-semibold border-b-2 border-brand-accent' : 'text-brand-muted'
+          isQaActive ? 'text-brand-accent font-semibold border-b-2 border-brand-accent' : 'text-brand-muted'
         }`}
       >
         Q&A
