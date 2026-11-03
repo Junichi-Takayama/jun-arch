@@ -6,10 +6,14 @@ const breadcrumbs = [
   { name: 'CONTACT', href: '/contact/' },
   { name: '資料請求' }
 ];
+
+const buildingPlanOptions = ['新築', 'リフォーム', '未定'];
+const landStatusOptions = ['あり（契約済）', 'なし'];
+const moveInPeriodOptions = ['なるべく早期（1年以内）', '2年以内', '3年以内', '未定'];
 ---
 
 <Layout title="資料請求 – 株式会社 加藤淳設計事務所">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-4 pb-20">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 pt-4 pb-20">
     <Breadcrumb items={breadcrumbs} />
 
     <!-- Page Header -->
@@ -18,24 +22,290 @@ const breadcrumbs = [
       <h1 class="text-2xl md:text-3xl font-serif tracking-wider text-brand-text mb-4">
         資料請求
       </h1>
-      <p class="text-xs md:text-sm text-brand-muted tracking-wider">
-        加藤淳設計事務所の家づくりコンセプトブック・パンフレットをお届けします
+      <p class="text-xs md:text-sm text-brand-muted tracking-wider leading-relaxed max-w-xl mx-auto">
+        加藤淳設計事務所の家づくりコンセプトブック・施工事例集をお届けいたします
       </p>
     </div>
 
-    <!-- コンテンツ枠（ハコ） -->
-    <div class="bg-brand-surface/40 border border-brand-border rounded-sm p-8 md:p-12 text-center text-brand-muted">
-      <p class="font-serif text-sm md:text-base text-brand-text mb-2">【コンテンツ準備中】</p>
-      <p class="text-xs">合意済みの資料請求フォーム仕様に基づき、本番フォームを移植・整備予定です。</p>
+    <!-- カタログセット案内ブロック -->
+    <section class="bg-white border border-brand-border rounded-sm p-6 sm:p-8 shadow-sm mb-10">
+      <div class="space-y-3 text-xs sm:text-sm text-brand-text leading-relaxed">
+        <p>㈱加藤淳設計事務所へご興味を持っていただき、ありがとうございます。</p>
+        <p>弊社のコンセプトや施工事例についてまとめたカタログをセットにしてお届けいたします。</p>
+        <p>ご希望の方は下記入力フォームにご記入の上、お申込みください。</p>
+        <p class="text-xs text-brand-muted pt-1">
+          ※資料請求以外のお問い合わせや家づくりのご相談は
+          <a href="/contact/" class="text-brand-accent font-medium hover:underline">こちらのお問い合わせフォーム</a>
+          からお願いいたします。
+        </p>
+      </div>
+
+      <!-- 送付資料の内容紹介 -->
+      <div class="bg-brand-surface border border-brand-border rounded-sm p-4 sm:p-5 my-6 space-y-2.5 text-xs sm:text-sm">
+        <p class="font-serif font-medium text-brand-text text-sm border-b border-brand-border pb-2">
+          お届けする資料セット
+        </p>
+        <div class="space-y-2 pt-1 text-brand-text">
+          <div class="flex items-start gap-2">
+            <span class="text-brand-accent font-bold">‣</span>
+            <div>
+              <strong class="font-medium">コンセプトブック</strong>
+              <p class="text-xs text-brand-muted mt-0.5">大切にしている住まいへの考え方・家づくりの流れをまとめました</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-2">
+            <span class="text-brand-accent font-bold">‣</span>
+            <div>
+              <strong class="font-medium">LIVING REPORT</strong>
+              <p class="text-xs text-brand-muted mt-0.5">施工事例と実際に暮らすオーナー様へのインタビュー集</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- カタログ画像 -->
+      <div class="my-6">
+        <div class="border border-brand-border rounded-sm overflow-hidden bg-stone-50 max-w-xl mx-auto shadow-xs">
+          <img
+            src="/images/contact/brochure-set.png"
+            alt="加藤淳設計事務所 カタログセット（コンセプトブック・LIVING REPORT）"
+            class="w-full h-auto object-cover"
+            loading="lazy"
+          />
+        </div>
+        <p class="text-[11px] text-center text-brand-muted mt-2">
+          ※送付内容は予告なく変更する可能性がございます。予めご了承ください。
+        </p>
+      </div>
+    </section>
+
+    <!-- 注意事項バナー -->
+    <div class="bg-brand-light/20 border border-brand-accent/40 p-4 sm:p-5 rounded-sm mb-8 text-xs text-brand-text">
+      <p class="font-medium mb-1">■ 資料請求に関するお願い</p>
+      <p class="text-brand-muted">
+        誠に恐れ入りますが、営業目的・同業者の方からの資料請求はご遠慮いただいております。何卒ご了承ください。
+      </p>
     </div>
 
-    <!-- Back to Top CTA -->
-    <div class="text-center pt-12">
-      <a
-        href="/"
-        class="inline-block px-8 py-3 bg-brand-surface hover:bg-brand-light border border-brand-border text-brand-text text-xs tracking-widest rounded font-medium transition shadow-sm"
+    <!-- 資料請求フォーム -->
+    <div class="bg-white border border-brand-border p-6 sm:p-10 shadow-sm rounded-sm">
+      <div class="border-b border-brand-border pb-4 mb-6">
+        <h2 class="text-base sm:text-lg font-serif font-medium text-brand-text">
+          資料請求フォーム
+        </h2>
+        <p class="text-xs text-brand-muted mt-1">
+          下記項目をご入力の上、「送信する」ボタンを押してください。
+        </p>
+      </div>
+
+      <!-- Web3Forms 接続対応フォーム -->
+      <form
+        action="https://api.web3forms.com/submit"
+        method="POST"
+        class="space-y-6"
       >
-        ← トップページに戻る
+        <!-- Web3Forms 設定用 hidden フィールド（後ほどアクセスキーを接続） -->
+        <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE" />
+        <input type="hidden" name="subject" value="【資料請求】ホームページよりお申し込み" />
+        <input type="hidden" name="from_name" value="加藤淳設計事務所 Webサイト" />
+        <!-- スパム防止ハニーポット -->
+        <input type="checkbox" name="botcheck" class="hidden" style="display: none;" />
+
+        <!-- お名前 -->
+        <div>
+          <label for="name" class="block text-xs font-medium tracking-wider text-brand-text mb-2">
+            お名前 <span class="text-red-500 font-normal">※必須</span>
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            placeholder="例：山田 太郎"
+            class="w-full text-xs sm:text-sm border border-brand-border px-4 py-3 focus:outline-none focus:border-brand-accent transition-colors bg-brand-surface rounded-sm"
+          />
+        </div>
+
+        <!-- ふりがな -->
+        <div>
+          <label for="name-kana" class="block text-xs font-medium tracking-wider text-brand-text mb-2">
+            ふりがな <span class="text-red-500 font-normal">※必須</span>
+          </label>
+          <input
+            type="text"
+            id="name-kana"
+            name="name-kana"
+            required
+            placeholder="例：やまだ たろう"
+            class="w-full text-xs sm:text-sm border border-brand-border px-4 py-3 focus:outline-none focus:border-brand-accent transition-colors bg-brand-surface rounded-sm"
+          />
+        </div>
+
+        <!-- Eメール -->
+        <div>
+          <label for="email" class="block text-xs font-medium tracking-wider text-brand-text mb-2">
+            Eメールアドレス <span class="text-red-500 font-normal">※必須</span>
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            placeholder="例：name@example.com"
+            class="w-full text-xs sm:text-sm border border-brand-border px-4 py-3 focus:outline-none focus:border-brand-accent transition-colors bg-brand-surface rounded-sm"
+          />
+        </div>
+
+        <!-- お電話番号 -->
+        <div>
+          <label for="tel" class="block text-xs font-medium tracking-wider text-brand-text mb-2">
+            お電話番号 <span class="text-red-500 font-normal">※必須</span>
+          </label>
+          <input
+            type="tel"
+            id="tel"
+            name="tel"
+            required
+            placeholder="例：090-0000-0000"
+            class="w-full text-xs sm:text-sm border border-brand-border px-4 py-3 focus:outline-none focus:border-brand-accent transition-colors bg-brand-surface rounded-sm"
+          />
+        </div>
+
+        <!-- ご住所 -->
+        <div>
+          <label for="address" class="block text-xs font-medium tracking-wider text-brand-text mb-2">
+            ご住所（送付先） <span class="text-red-500 font-normal">※必須</span>
+          </label>
+          <input
+            type="text"
+            id="address"
+            name="address"
+            required
+            placeholder="例：〒951-8142 新潟県新潟市中央区関屋大川前2-3-8-D"
+            class="w-full text-xs sm:text-sm border border-brand-border px-4 py-3 focus:outline-none focus:border-brand-accent transition-colors bg-brand-surface rounded-sm"
+          />
+          <span class="text-[11px] text-brand-muted mt-1 block">
+            ※資料をお届けするため、郵便番号・建物名・部屋番号まで正確にご記入ください。
+          </span>
+        </div>
+
+        <!-- 建築予定について -->
+        <div class="pt-2">
+          <label class="block text-xs font-medium tracking-wider text-brand-text mb-2.5">
+            建築予定について
+          </label>
+          <div class="flex flex-wrap gap-4 sm:gap-6">
+            {
+              buildingPlanOptions.map((option) => (
+                <label class="inline-flex items-center gap-2 cursor-pointer text-xs text-brand-text">
+                  <input
+                    type="radio"
+                    name="building_plan"
+                    value={option}
+                    class="w-4 h-4 text-brand-accent border-brand-border focus:ring-0 cursor-pointer"
+                  />
+                  <span>{option}</span>
+                </label>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- 建築予定地 -->
+        <div class="pt-2">
+          <label class="block text-xs font-medium tracking-wider text-brand-text mb-2.5">
+            建築予定地
+          </label>
+          <div class="flex flex-wrap gap-4 sm:gap-6">
+            {
+              landStatusOptions.map((option) => (
+                <label class="inline-flex items-center gap-2 cursor-pointer text-xs text-brand-text">
+                  <input
+                    type="radio"
+                    name="land_status"
+                    value={option}
+                    class="w-4 h-4 text-brand-accent border-brand-border focus:ring-0 cursor-pointer"
+                  />
+                  <span>{option}</span>
+                </label>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- 入居希望時期 -->
+        <div class="pt-2">
+          <label class="block text-xs font-medium tracking-wider text-brand-text mb-2.5">
+            入居希望時期
+          </label>
+          <div class="flex flex-wrap gap-4 sm:gap-6">
+            {
+              moveInPeriodOptions.map((option) => (
+                <label class="inline-flex items-center gap-2 cursor-pointer text-xs text-brand-text">
+                  <input
+                    type="radio"
+                    name="move_in_period"
+                    value={option}
+                    class="w-4 h-4 text-brand-accent border-brand-border focus:ring-0 cursor-pointer"
+                  />
+                  <span>{option}</span>
+                </label>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- ご質問・ご要望 -->
+        <div class="pt-2">
+          <label for="message" class="block text-xs font-medium tracking-wider text-brand-text mb-2">
+            ご質問・ご要望など <span class="text-brand-muted font-normal text-[11px]">（任意）</span>
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            rows="4"
+            placeholder="家づくりについてのご要望や気になる点がございましたらご自由にご記入ください"
+            class="w-full text-xs sm:text-sm border border-brand-border px-4 py-3 focus:outline-none focus:border-brand-accent transition-colors bg-brand-surface rounded-sm"
+          ></textarea>
+        </div>
+
+        <!-- 個人情報の取り扱いについて -->
+        <div class="pt-4 border-t border-brand-border">
+          <p class="text-xs text-brand-muted mb-3 leading-relaxed">
+            【個人情報の取り扱いについて】<br />
+            弊社の<a href="/privacy-policy/" target="_blank" rel="noopener noreferrer" class="text-brand-accent hover:underline font-medium">プライバシーポリシー</a>をお読みいただき、予め同意の上送信をお願いいたします。
+          </p>
+          <label class="flex items-center gap-2.5 cursor-pointer">
+            <input
+              type="checkbox"
+              name="privacy"
+              value="同意する"
+              required
+              class="h-4 w-4 border-brand-border text-brand-accent focus:ring-0 cursor-pointer rounded-xs"
+            />
+            <span class="text-xs text-brand-text font-medium">
+              プライバシーポリシーに同意する
+            </span>
+          </label>
+        </div>
+
+        <!-- 送信ボタン -->
+        <div class="pt-6 text-center">
+          <button
+            type="submit"
+            class="w-full sm:w-auto min-w-[240px] bg-brand-accent hover:bg-brand-dark text-white text-xs tracking-widest px-10 py-4 transition-colors font-medium shadow-sm rounded-sm cursor-pointer"
+          >
+            資料を請求する（無料）
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- お問い合わせへの誘導リンク -->
+    <div class="text-center pt-10 text-xs text-brand-muted">
+      <span>家づくりの個別相談・見学会についてのお問い合わせは</span>
+      <a href="/contact/" class="text-brand-accent hover:underline font-medium ml-1">
+        CONTACT（お問い合わせ）はこちら →
       </a>
     </div>
   </div>
