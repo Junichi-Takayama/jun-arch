@@ -172,24 +172,16 @@ const flowSteps = [
         <h3 class="sr-only">住宅7原則</h3>
       </div>
 
-      <!-- 住宅7原則 アイコングリッド -->
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
+      <!-- 住宅7原則 ギャラリー（上段4・下段3 均等配置・中央寄せ） -->
+      <div class="flex flex-wrap justify-center gap-3 sm:gap-5 max-w-4xl mx-auto">
         {principles.map((item) => (
-          <div class="bg-white border border-brand-border rounded-sm p-3 sm:p-4 text-center shadow-xs hover:shadow-sm transition">
-            <div class="aspect-square w-full mb-3 overflow-hidden rounded-xs bg-stone-50 flex items-center justify-center">
-              <img
-                src={item.image}
-                alt={item.alt}
-                class="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <span class="text-[10px] font-mono tracking-widest text-brand-accent uppercase block font-semibold mb-1">
-              PRINCIPLE {item.num}
-            </span>
-            <p class="text-xs sm:text-sm font-serif font-medium text-brand-text">
-              {item.title}
-            </p>
+          <div class="w-[calc(50%-6px)] sm:w-[calc(25%-15px)] max-w-[210px]">
+            <img
+              src={item.image}
+              alt={item.alt}
+              class="w-full h-auto rounded-xs border border-brand-border/60 shadow-xs hover:shadow-sm transition"
+              loading="lazy"
+            />
           </div>
         ))}
       </div>
@@ -223,34 +215,6 @@ const flowSteps = [
             加藤淳設計事務所では、快適な住まいに必要な性能を、根拠をもって設計。<br />
             <strong class="text-brand-text font-medium">家族の健康と安全を守ることが住まいの最大の役割</strong>と考えています。
           </p>
-
-          <!-- 実例写真ギャラリー（3枚） -->
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6">
-            <div class="aspect-square rounded-xs overflow-hidden border border-brand-border bg-stone-100">
-              <img
-                src="/images/concept/promise-01-living.png"
-                alt="自然光と心地よい風が通り抜けるリビング空間"
-                class="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <div class="aspect-square rounded-xs overflow-hidden border border-brand-border bg-stone-100">
-              <img
-                src="/images/concept/promise-01-staircase.png"
-                alt="開放的な吹き抜けと美しい木製スチール階段"
-                class="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <div class="aspect-square rounded-xs overflow-hidden border border-brand-border bg-stone-100">
-              <img
-                src="/images/concept/promise-01-dining.png"
-                alt="木のぬくもりを感じる落ち着きのあるダイニングキッチン"
-                class="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </div>
-          </div>
 
           <!-- 性能詳細解説 ＆ ブログリンク -->
           <div class="bg-brand-surface p-5 sm:p-6 rounded-sm border border-brand-border space-y-4 text-xs sm:text-sm text-brand-text leading-relaxed">
@@ -395,16 +359,6 @@ const flowSteps = [
               だからこそ私たちは、<strong class="text-brand-text font-medium">家づくりの楽しさ</strong>を大切にしています。<br />
               素材の工夫や現場との意見交換、予算のメリハリをつけて<strong class="text-brand-text font-medium">パズルのようにコストコントロール</strong>をして希望を実現していきます。
             </p>
-          </div>
-
-          <!-- コストパフォーマンス バナー -->
-          <div class="my-6 text-center">
-            <img
-              src="/images/concept/cost-performance-banner.png"
-              alt="コストパフォーマンスとデザイン性を両立する設計"
-              class="max-w-md w-full mx-auto h-auto object-contain rounded-xs"
-              loading="lazy"
-            />
           </div>
 
           <!-- 希望の形だけでなく願いを大切に -->
