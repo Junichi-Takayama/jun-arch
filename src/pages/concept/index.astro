@@ -138,8 +138,8 @@ const flowSteps = [
     <section class="py-12 md:py-16 border-b border-brand-border">
       <div class="text-center max-w-2xl mx-auto mb-10">
         <h2 class="text-lg sm:text-xl md:text-2xl font-serif font-medium tracking-wider text-brand-text leading-relaxed">
-          あなたのライフスタイル　住まいへの夢<br class="sm:hidden" />
-          <span class="text-brand-accent mx-1">×</span><br class="sm:hidden" />
+          あなたのライフスタイル　住まいへの夢<br />
+          <span class="text-brand-accent mx-1">×</span><br />
           加藤淳設計事務所が考える　住宅７原則
         </h2>
       </div>
@@ -148,17 +148,17 @@ const flowSteps = [
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto">
         {principles.map((item, index) => (
           <figure
-            class={`group flex flex-col ${
+            class={`flex flex-col ${
               index === 6
                 ? 'sm:col-span-2 sm:max-w-xs sm:mx-auto md:col-start-2 md:col-span-1 md:max-w-none w-full'
                 : 'w-full'
             }`}
           >
-            <div class="aspect-[3/2] w-full overflow-hidden rounded-xs border border-brand-border/70 bg-stone-100 shadow-xs group-hover:shadow-sm transition">
+            <div class="aspect-[3/2] w-full overflow-hidden rounded-xs border border-brand-border/70 bg-stone-100">
               <img
                 src={item.image}
                 alt={item.alt}
-                class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                class="w-full h-full object-cover"
                 loading="lazy"
               />
             </div>
@@ -174,7 +174,7 @@ const flowSteps = [
     <!-- 理想の家づくりのための３つのお約束 -->
     <section id="promise" class="py-12 md:py-16 border-b border-brand-border scroll-mt-20">
       <!-- バナー画像 -->
-      <div class="rounded-sm overflow-hidden border border-brand-border shadow-sm mb-8 bg-stone-100 max-w-2xl mx-auto">
+      <div class="rounded-sm overflow-hidden border border-brand-border mb-8 bg-stone-100 max-w-2xl mx-auto">
         <img
           src="/images/concept/promises-banner.png"
           alt="理想の家づくりのための３つのお約束"
@@ -189,21 +189,21 @@ const flowSteps = [
         </h2>
       </div>
 
-      <div class="space-y-12">
+      <div class="space-y-16">
         <!-- PROMISE 1 -->
-        <article class="bg-white border border-brand-border rounded-sm p-6 sm:p-8 md:p-10 shadow-sm">
-          <h3 class="text-lg sm:text-xl font-serif font-medium text-brand-text tracking-wider mb-4">
+        <div class="space-y-6">
+          <h3 class="text-lg sm:text-xl font-serif font-medium text-brand-text tracking-wider">
             1.「耐震等級３」のデザイン住宅　家族と暮らしの安心の性能
           </h3>
 
-          <p class="text-xs sm:text-sm text-brand-text tracking-wider leading-relaxed mb-6">
+          <p class="text-xs sm:text-sm text-brand-text tracking-wider leading-relaxed">
             私たちは、快適な住まいに必要な性能を、根拠を持って設計しています。<br />
             そこに暮らす人の健康と安全を守ることが、<strong class="text-brand-text font-medium">住まいの最大の役割</strong>と考えています。
           </p>
 
           <!-- 3枚の実例画像（3カラム並列） -->
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
-            <div class="rounded-xs overflow-hidden border border-brand-border shadow-2xs bg-stone-100">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="rounded-xs overflow-hidden border border-brand-border bg-stone-100">
               <img
                 src="/images/concept/promise-01-earthquake-resistance.png"
                 alt="耐震等級3"
@@ -211,7 +211,7 @@ const flowSteps = [
                 loading="lazy"
               />
             </div>
-            <div class="rounded-xs overflow-hidden border border-brand-border shadow-2xs bg-stone-100">
+            <div class="rounded-xs overflow-hidden border border-brand-border bg-stone-100">
               <img
                 src="/images/concept/promise-01-heat-insulation.png"
                 alt="断熱性能 HEAT20"
@@ -219,7 +219,7 @@ const flowSteps = [
                 loading="lazy"
               />
             </div>
-            <div class="rounded-xs overflow-hidden border border-brand-border shadow-2xs bg-stone-100">
+            <div class="rounded-xs overflow-hidden border border-brand-border bg-stone-100">
               <img
                 src="/images/concept/promise-01-airtightness.png"
                 alt="気密性能 C値"
@@ -230,7 +230,7 @@ const flowSteps = [
           </div>
 
           <!-- 詳細解説 ＆ 保証 -->
-          <div class="bg-brand-surface p-5 sm:p-8 rounded-sm border border-brand-border space-y-4 text-xs sm:text-sm text-brand-text leading-relaxed">
+          <div class="space-y-4 text-xs sm:text-sm text-brand-text leading-relaxed">
             <p>
               耐震等級３は建築基準法の1.5倍の強度。<br />
               消防署や警察署、防災の拠点となる建築など、学校や病院よりも厳しい耐震基準です。<br />
@@ -243,25 +243,25 @@ const flowSteps = [
               >ブログ</a>でお伝えしています。）
             </p>
 
-            <p class="pt-3 border-t border-brand-border">
+            <p>
               断熱基準HEAT20「G1」「G2」は、北海道水準の断熱・省エネ性能。
             </p>
 
-            <p class="pt-3 border-t border-brand-border">
+            <p>
               気密性はC=0.5未満を目指しています。<br />
               この数値はもっと追求できますが、プランニングや工法によっても異なるため、景観や過ごしやすさも性能と考え、両立する数値として基準にしています。
             </p>
 
-            <p class="pt-3 border-t border-brand-border text-brand-muted">
+            <p class="text-brand-muted">
               また、お引き渡しから10年の間、工事に瑕疵があった場合の補修費用を補填するため、建設会社に加入が義務付けられている「瑕疵担保責任保険」に加えて、設備機器の保証や、最長60年の保証をおこなう「長期保証」に対応することも可能です。
             </p>
           </div>
-        </article>
+        </div>
 
 
         <!-- PROMISE 2 -->
-        <article id="promise2" class="bg-white border border-brand-border rounded-sm p-6 sm:p-8 md:p-10 shadow-sm scroll-mt-20">
-          <div class="rounded-sm overflow-hidden border border-brand-border shadow-sm mb-6 bg-stone-100 max-w-2xl mx-auto">
+        <div id="promise2" class="space-y-6 scroll-mt-20">
+          <div class="rounded-sm overflow-hidden border border-brand-border bg-stone-100 max-w-2xl mx-auto">
             <img
               src="/images/concept/promise-02-long-lasting.png"
               alt="長く喜びが続く家"
@@ -270,15 +270,15 @@ const flowSteps = [
             />
           </div>
 
-          <h3 class="text-lg sm:text-xl font-serif font-medium text-brand-text tracking-wider mb-4">
+          <h3 class="text-lg sm:text-xl font-serif font-medium text-brand-text tracking-wider">
             2.長く喜びが続く家
           </h3>
 
-          <p class="text-xs sm:text-sm text-brand-text tracking-wider leading-relaxed mb-4">
+          <p class="text-xs sm:text-sm text-brand-text tracking-wider leading-relaxed">
             私たちのつくる住まいの「ピーク」は、新築完成時ではありません。
           </p>
 
-          <ul class="space-y-2 mb-6 text-xs sm:text-sm text-brand-text">
+          <ul class="space-y-2 text-xs sm:text-sm text-brand-text">
             <li class="flex items-start gap-2">
               <span class="text-brand-accent mt-0.5">・</span>
               <span>家族の成長や生活の変化に対応する<strong class="font-medium text-brand-text">フレキシブルな空間</strong></span>
@@ -293,30 +293,30 @@ const flowSteps = [
             </li>
           </ul>
 
-          <p class="text-xs sm:text-sm text-brand-text tracking-wider leading-relaxed mb-6">
+          <p class="text-xs sm:text-sm text-brand-text tracking-wider leading-relaxed">
             暮らすほどに快適さが増す家を作ります。
           </p>
 
-          <p class="text-xs sm:text-sm text-brand-text tracking-wider leading-relaxed mb-6">
+          <p class="text-xs sm:text-sm text-brand-text tracking-wider leading-relaxed">
             快適さをもたらすために、敷地や周辺の環境、採光や風の抜け、<strong class="text-brand-text font-medium">1日・1年の太陽の動きを確かめてプランニング。</strong><br />
             変形敷地や高低差も住まいの個性として活かします。
           </p>
 
-          <div class="bg-brand-surface p-5 sm:p-6 rounded-sm border border-brand-border space-y-2 text-xs sm:text-sm text-brand-text leading-relaxed">
+          <div class="space-y-2 text-xs sm:text-sm text-brand-text leading-relaxed">
             <p>夏の暑さ、冬の寒さが辛くない。</p>
             <p>通年を通して自然な明るさの中で暮らせる。</p>
             <p>周りの建物の窓や目線に重ならない。</p>
             <p>理想の土地を予算を抑えてみつける可能性アップ。</p>
-            <p class="pt-3 text-brand-muted border-t border-brand-border font-medium">
+            <p class="text-brand-text">
               そんな「土地の魅力」を活かした家を作ります。
             </p>
           </div>
-        </article>
+        </div>
 
 
         <!-- PROMISE 3 -->
-        <article id="promise3" class="bg-white border border-brand-border rounded-sm p-6 sm:p-8 md:p-10 shadow-sm scroll-mt-20">
-          <div class="rounded-sm overflow-hidden border border-brand-border shadow-sm mb-6 bg-stone-100 max-w-2xl mx-auto">
+        <div id="promise3" class="space-y-6 scroll-mt-20">
+          <div class="rounded-sm overflow-hidden border border-brand-border bg-stone-100 max-w-2xl mx-auto">
             <img
               src="/images/concept/promise-03-enjoyable-living.png"
               alt="一緒に楽しい家づくりをしましょう"
@@ -325,11 +325,11 @@ const flowSteps = [
             />
           </div>
 
-          <h3 class="text-lg sm:text-xl font-serif font-medium text-brand-text tracking-wider mb-4">
+          <h3 class="text-lg sm:text-xl font-serif font-medium text-brand-text tracking-wider">
             3.一緒に楽しい家づくりをしましょう
           </h3>
 
-          <div class="text-xs sm:text-sm text-brand-text tracking-wider leading-relaxed space-y-4 mb-6">
+          <div class="space-y-4 text-xs sm:text-sm text-brand-text tracking-wider leading-relaxed">
             <p>
               「注文住宅は、建築費用が高い…」と思われがち。<br />
               初期見積もりが高く、予算にあわせてどんどん希望を削ぎ落すのは憂鬱ですよね。<br />
@@ -344,7 +344,7 @@ const flowSteps = [
           </div>
 
           <!-- コストコントロール図 -->
-          <div class="rounded-sm overflow-hidden border border-brand-border shadow-sm mb-8 bg-stone-100 max-w-2xl mx-auto">
+          <div class="rounded-sm overflow-hidden border border-brand-border bg-stone-100 max-w-2xl mx-auto">
             <img
               src="/images/concept/promise-03-cost-control-diagram.png"
               alt="コストコントロール図"
@@ -352,35 +352,37 @@ const flowSteps = [
               loading="lazy"
             />
           </div>
-        </article>
+        </div>
       </div>
 
       <!-- 希望の「形」だけではなく「願い」を大切にします -->
-      <div class="mt-12 bg-brand-surface p-6 sm:p-8 rounded-sm border border-brand-border max-w-2xl mx-auto space-y-4">
-        <h2 class="text-base sm:text-lg font-serif font-medium text-brand-text tracking-wider">
+      <div class="mt-16 pt-12 border-t border-brand-border max-w-2xl mx-auto space-y-6 text-center">
+        <h2 class="text-base sm:text-lg md:text-xl font-serif font-medium text-brand-text tracking-wider">
           希望の「形」だけではなく「願い」を大切にします
         </h2>
 
-        <p class="text-xs sm:text-sm text-brand-text tracking-wider leading-relaxed">
-          例えば、大きな窓が欲しい、ウォークインクロゼットが欲しい…<br />
-          それをただ組み立てていく「御用聞き」ではなく、
-        </p>
+        <div class="space-y-4 text-xs sm:text-sm text-brand-text tracking-wider leading-relaxed text-left sm:text-center">
+          <p>
+            例えば、大きな窓が欲しい、ウォークインクロゼットが欲しい…<br />
+            それをただ組み立てていく「御用聞き」ではなく、
+          </p>
 
-        <p class="text-xs sm:text-sm text-brand-text tracking-wider leading-relaxed font-medium">
-          「<strong class="text-brand-accent">どうして、あなたがそれを欲しいと思ったのか</strong>」を大切にしています。
-        </p>
+          <p class="font-medium">
+            「<strong class="text-brand-accent">どうして、あなたがそれを欲しいと思ったのか</strong>」を大切にしています。
+          </p>
 
-        <p class="text-xs sm:text-sm text-brand-text tracking-wider leading-relaxed pt-2">
-          建てた後「思っていたのとちがう」という悲劇を防ぎお金のかかる夢や家族で意見が合わないことも、形にできる可能性が生まれていきます。
-        </p>
+          <p class="pt-2">
+            建てた後「思っていたのとちがう」という悲劇を防ぎお金のかかる夢や家族で意見が合わないことも、形にできる可能性が生まれていきます。
+          </p>
+        </div>
       </div>
     </section>
 
     <!-- 立体的な設計から生まれる、心地よい光と風 何気ない家時間を特別なくつろぎのひとときに -->
     <section class="py-12 md:py-16 border-b border-brand-border">
-      <div class="bg-white border border-brand-border rounded-sm p-6 sm:p-8 md:p-10 shadow-sm">
+      <div class="max-w-3xl mx-auto">
         <!-- 空間イメージ写真 -->
-        <div class="rounded-sm overflow-hidden border border-brand-border shadow-sm mb-8 bg-stone-100 max-w-2xl mx-auto">
+        <div class="rounded-sm overflow-hidden border border-brand-border mb-8 bg-stone-100 max-w-2xl mx-auto">
           <img
             src="/images/concept/concept-spatial-comfort.jpg"
             alt="立体的な設計から生まれる、心地よい光と風"
@@ -395,8 +397,8 @@ const flowSteps = [
         </h3>
 
         <!-- チェックリスト 5項目 -->
-        <div class="bg-brand-surface p-5 sm:p-6 rounded-sm border border-brand-border max-w-2xl mx-auto mb-8">
-          <ul class="space-y-2.5 text-xs sm:text-sm text-brand-text">
+        <div class="max-w-xl mx-auto mb-10">
+          <ul class="space-y-3 text-xs sm:text-sm text-brand-text">
             <li class="flex items-start gap-2.5">
               <span class="text-brand-accent font-bold">✔</span>
               <span><strong class="font-medium text-brand-text">寒さ・暑さ・地震に強い家</strong>でずっと快適に暮らす</span>
