@@ -1,32 +1,11 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Breadcrumb from '../../components/common/Breadcrumb.astro';
+import blogPosts from '../../data/blogPosts.json';
 
-const breadcrumbs = [{ name: 'ブログ' }];
+const breadcrumbs = [{ name: 'ブログ一覧' }];
 
-const blogPosts = [
-  {
-    date: "2026.09.02",
-    category: "現場レポート",
-    title: "無垢オーク材と大谷石のコントラスト。現場より",
-    image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=600&q=80",
-    slug: "sample-post"
-  },
-  {
-    date: "2026.08.20",
-    category: "デザイン思想",
-    title: "「陰影を愉しむ」日本の美意識を宿した照明計画について",
-    image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80",
-    slug: "sample-post"
-  },
-  {
-    date: "2026.08.05",
-    category: "リノベーション",
-    title: "ヴィンテージマンションをスケルトンから再構築する",
-    image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=600&q=80",
-    slug: "sample-post"
-  }
-];
+// 全21件の過去ブログ記事
 ---
 
 <Layout title="ブログ – 株式会社 加藤淳設計事務所">
@@ -35,37 +14,55 @@ const blogPosts = [
 
     <!-- Page Header -->
     <div class="text-center py-10 md:py-14 border-b border-brand-border mb-10">
-      <span class="text-xs font-serif tracking-widest text-brand-accent uppercase block mb-2 font-semibold">Blog</span>
+      <span class="text-xs font-serif tracking-widest text-brand-accent uppercase block mb-2 font-semibold">Blog Archive</span>
       <h1 class="text-2xl md:text-3xl font-serif tracking-wider text-brand-text mb-4">
-        ブログ
+        ブログ記事一覧
       </h1>
       <p class="text-xs md:text-sm text-brand-muted tracking-wider">
-        加藤淳設計事務所の設計日誌・現場レポート・暮らしのコラム
+        過去の設計日誌・コラム一覧（note転載・確認用アーカイブ）
       </p>
     </div>
 
+    <!-- 記事一覧グリッド -->
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
       {blogPosts.map((post) => (
-        <article class="space-y-3 group border border-brand-border bg-white rounded-sm overflow-hidden p-4 shadow-sm hover:border-brand-accent transition-colors">
-          <a href={`/blog/${post.slug}/`} class="aspect-[4/3] bg-stone-100 block overflow-hidden rounded-sm relative">
-            <img 
-              src={post.image} 
-              alt={post.title} 
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-              loading="lazy"
-            />
-          </a>
-          <div class="flex items-center gap-3 text-xs pt-1">
-            <span class="text-brand-muted font-mono text-[11px]">{post.date}</span>
-            <span class="px-2 py-0.5 bg-brand-light text-brand-dark rounded text-[10px] font-medium tracking-wider">
-              {post.category}
-            </span>
-          </div>
-          <h2 class="font-serif font-medium text-sm text-brand-text leading-snug group-hover:text-brand-accent transition">
-            <a href={`/blog/${post.slug}/`}>
-              {post.title}
+        <article class="flex flex-col justify-between group border border-brand-border bg-white rounded-sm overflow-hidden p-4 shadow-sm hover:border-brand-accent transition-colors">
+          <div>
+            <a href={`/blog/${post.slug}/`} class="aspect-[16/10] bg-brand-surface block overflow-hidden rounded-sm relative mb-3">
+              {post.eyecatch ? (
+                <img 
+                  src={post.eyecatch} 
+                  alt={post.title} 
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                  loading="lazy"
+                />
+              ) : (
+                <div class="w-full h-full flex flex-col items-center justify-center text-brand-muted p-4 text-center">
+                  <span class="font-serif text-xs tracking-widest text-brand-sub mb-1">ARCH CRAFT</span>
+                  <span class="text-[11px] line-clamp-2">{post.title}</span>
+                </div>
+              )}
             </a>
-          </h2>
+            <div class="flex items-center gap-3 text-xs mb-2">
+              <span class="text-brand-muted font-mono text-[11px]">{post.date}</span>
+              <span class="px-2 py-0.5 bg-brand-light text-brand-dark rounded text-[10px] font-medium tracking-wider">
+                {post.category}
+              </span>
+            </div>
+            <h2 class="font-serif font-medium text-sm text-brand-text leading-snug group-hover:text-brand-accent transition">
+              <a href={`/blog/${post.slug}/`}>
+                {post.title}
+              </a>
+            </h2>
+          </div>
+          <div class="pt-4 mt-2 border-t border-brand-border/60 text-right">
+            <a
+              href={`/blog/${post.slug}/`}
+              class="text-xs text-brand-accent group-hover:underline tracking-wider font-medium"
+            >
+              記事を読む →
+            </a>
+          </div>
         </article>
       ))}
     </div>
@@ -81,5 +78,6 @@ const blogPosts = [
     </div>
   </div>
 </Layout>
+
 
 
