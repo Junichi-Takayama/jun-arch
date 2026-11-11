@@ -218,3 +218,130 @@ export async function getNewsDetail(contentId: string, queries?: MicroCMSQueries
     return MOCK_NEWS.find((item) => item.id === contentId) || null;
   }
 }
+
+
+// ==========================================
+// 5. 型定義 & 取得関数 (Owner Interview)
+// ==========================================
+
+import mockOwnerInterviews from '../data/ownerInterviews.json';
+
+export interface OwnerInterviewItem {
+  id: string;
+  title: string;
+  publishedAt?: string;
+  createdAt?: string;
+  date: string; // 表示用（YYYY.MM.DD）
+  content: string; // HTML文字列
+  thumbnail?: {
+    url: string;
+    width?: number;
+    height?: number;
+  };
+  isExternal?: boolean;
+}
+
+interface MicroCMSOwnerInterviewRaw {
+  id: string;
+  title: string;
+  publishedAt?: string;
+  createdAt?: string;
+  date?: string;
+  contents?: string;
+  content?: string;
+  thumbnail?: { url: string; width?: number; height?: number } | string;
+}
+
+export const MOCK_OWNER_INTERVIEWS: OwnerInterviewItem[] = mockOwnerInterviews as OwnerInterviewItem[];
+
+function formatOwnerInterviewItem(item: MicroCMSOwnerInterviewRaw): OwnerInterviewItem {
+  const rawDate = item.date || item.publishedAt || item.createdAt;
+  const dateStr = rawDate
+    ? new Date(rawDate).toISOString().split('T')[0].replace(/-/g, '.')
+    : '2026.10.01';
+
+  let thumbObj: { url: string; width?: number; height?: number } | undefined;
+  if (typeof item.thumbnail === 'object' && item.thumbnail !== null) {
+    thumbObj = item.thumbnail;
+  } else if (typeof item.thumbnail === 'string' && item.thumbnail.trim() !== '') {
+    thumbObj = { url: item.thumbnail, width: 1024, height: 683 };
+  }
+
+  const isExternal = item.id.startsWith('daily-lives-');
+
+  return {
+    id: item.id,
+    title: item.title,
+    publishedAt: item.publishedAt,
+    createdAt: item.createdAt,
+    date: dateStr,
+    content: item.contents || item.content || '',
+    thumbnail: thumbObj,
+    isExternal,
+  };
+}
+
+export async function getOwnerInterviewList(queries?: MicroCMSQueries): Promise<OwnerInterviewItem[]> {
+  if (!client) {
+    const list = [...MOCK_OWNER_INTERVIEWS];
+    if (queries?.limit && queries.limit > 0) {
+      return list.slice(0, queries.limit);
+    }
+    return list;
+  }
+
+  try {
+    const mergedQueries = {
+      orders: '-date',
+      ...queries,
+    };
+
+    if (!queries?.limit) {
+      const allContents = await client.getAllContents<MicroCMSOwnerInterviewRaw>({
+        endpoint: 'owner-interview',
+        queries: mergedQueries,
+      });
+      if (allContents.length > 0) {
+        return allContents.map(formatOwnerInterviewItem);
+      }
+      // microCMS上が0件の場合はフォールバックを返却
+      return [...MOCK_OWNER_INTERVIEWS];
+    }
+
+    const res = await client.getList<MicroCMSOwnerInterviewRaw>({
+      endpoint: 'owner-interview',
+      queries: mergedQueries,
+    });
+
+    if (res.contents.length > 0) {
+      return res.contents.map(formatOwnerInterviewItem);
+    }
+    return [...MOCK_OWNER_INTERVIEWS];
+  } catch (error) {
+    console.warn('[microCMS] owner-interview一覧の取得に失敗したため、モックデータを返却します:', error);
+    const list = [...MOCK_OWNER_INTERVIEWS];
+    if (queries?.limit && queries.limit > 0) {
+      return list.slice(0, queries.limit);
+    }
+    return list;
+  }
+}
+
+export async function getOwnerInterviewDetail(contentId: string, queries?: MicroCMSQueries): Promise<OwnerInterviewItem | null> {
+  if (!client) {
+    return MOCK_OWNER_INTERVIEWS.find((item) => item.id === contentId) || null;
+  }
+
+  try {
+    const item = await client.getListDetail<MicroCMSOwnerInterviewRaw>({
+      endpoint: 'owner-interview',
+      contentId,
+      queries,
+    });
+    return formatOwnerInterviewItem(item);
+  } catch (error) {
+    console.warn(`[microCMS] owner-interview/${contentId} の取得に失敗したため、モックデータを検索します:`, error);
+    return MOCK_OWNER_INTERVIEWS.find((item) => item.id === contentId) || null;
+  }
+}
+

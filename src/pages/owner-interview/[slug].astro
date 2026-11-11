@@ -1,0 +1,133 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/common/Breadcrumb.astro';
+import { getOwnerInterviewList, getOwnerInterviewDetail } from '../../lib/microcms';
+
+export async function getStaticPaths() {
+  const interviewList = await getOwnerInterviewList();
+  return interviewList.map((item) => ({
+    params: { slug: item.id },
+  }));
+}
+
+const { slug } = Astro.params;
+const interview = await getOwnerInterviewDetail(slug as string);
+
+if (!interview) {
+  return Astro.redirect('/owner-interview/');
+}
+
+const breadcrumbs = [
+  { name: 'オーナーインタビュー', href: '/owner-interview/' },
+  { name: interview.title },
+];
+
+// 画像プレースホルダー [[IMG: /images/uploads/...]] を figure タグへ自動展開
+const renderedContent = interview.content.replace(
+  /\[\[IMG:\s*([^\]]+)\]\]/g,
+  '<figure class="my-8"><img src="$1" alt="" class="w-full h-auto rounded-sm shadow-sm" loading="lazy" /></figure>'
+);
+---
+
+<Layout title={`${interview.title} – オーナーインタビュー – 株式会社 加藤淳設計事務所`}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pt-4 pb-20">
+    <Breadcrumb items={breadcrumbs} />
+
+    <!-- Article Header -->
+    <article class="max-w-3xl mx-auto pt-6 pb-12">
+      <header class="border-b border-brand-border pb-6 mb-8 space-y-4">
+        <div class="flex items-center gap-3 text-xs">
+          <span class="text-brand-muted font-mono tracking-wider">{interview.date}</span>
+          {
+            interview.isExternal ? (
+              <span class="px-2.5 py-0.5 bg-[#ecc58a] text-[#1e1e1e] text-[10px] tracking-wider font-medium rounded shadow-sm">
+                メディア取材
+              </span>
+            ) : (
+              <span class="px-2.5 py-0.5 bg-stone-900 text-white text-[10px] tracking-wider font-medium rounded shadow-sm">
+                オーナーインタビュー
+              </span>
+            )
+          }
+        </div>
+        <h1 class="text-xl sm:text-2xl md:text-3xl font-serif font-medium text-brand-text leading-snug tracking-wider">
+          {interview.title}
+        </h1>
+      </header>
+
+      <!-- Thumbnail -->
+      {
+        interview.thumbnail?.url && (
+          <div class="aspect-[16/10] overflow-hidden rounded-sm bg-brand-surface mb-10 border border-brand-border shadow-sm">
+            <img
+              src={interview.thumbnail.url}
+              alt={interview.title}
+              class="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </div>
+        )
+      }
+
+      <!-- Body Content -->
+      <div
+        class="interview-content text-xs sm:text-sm text-brand-text leading-[2.2] tracking-wider space-y-6 font-light"
+        set:html={renderedContent}
+      />
+
+      <!-- Action Navigation -->
+      <div class="pt-12 mt-12 border-t border-brand-border flex flex-col sm:flex-row justify-between items-center gap-4">
+        <a
+          href="/owner-interview/"
+          class="inline-flex items-center gap-2 px-6 py-2.5 bg-brand-surface hover:bg-brand-light border border-brand-border text-brand-text text-xs tracking-wider rounded font-medium transition shadow-sm w-full sm:w-auto justify-center"
+        >
+          <span>←</span>
+          <span>オーナーインタビュー一覧に戻る</span>
+        </a>
+
+        <a
+          href="/contact/"
+          class="inline-flex items-center gap-2 px-6 py-2.5 bg-brand-accent hover:opacity-95 text-white text-xs tracking-wider rounded font-medium transition shadow-sm w-full sm:w-auto justify-center"
+        >
+          <span>家づくりのご相談・お問い合わせ →</span>
+        </a>
+      </div>
+    </article>
+  </div>
+</Layout>
+
+<style is:global>
+  .interview-content h2,
+  .interview-content h3 {
+    font-family: var(--font-serif, serif);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #1e1e1e;
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e7e5e4;
+    line-height: 1.5;
+  }
+
+  .interview-content p {
+    margin-bottom: 1.5rem;
+  }
+
+  .interview-content a:not(.external-link-card a) {
+    color: #926118;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .interview-content figure {
+    margin: 2rem 0;
+  }
+
+  .interview-content figcaption {
+    font-size: 0.75rem;
+    color: #78716c;
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+</style>
