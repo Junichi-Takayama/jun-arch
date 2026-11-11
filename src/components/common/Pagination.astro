@@ -1,0 +1,85 @@
+---
+import type { Page } from 'astro';
+
+interface Props {
+  page: Page<any>;
+}
+
+const { page } = Astro.props;
+
+// 全ページ番号配列の生成 [1, 2, ..., lastPage]
+const totalPages = page.lastPage;
+const currentPage = page.currentPage;
+const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+// 各ページへのURL生成関数（末尾スラッシュ完全統一）
+function getPageUrl(num: number): string {
+  if (num === 1) return '/news/';
+  return `/news/${num}/`;
+}
+
+function formatUrl(url?: string): string | undefined {
+  if (!url) return undefined;
+  return url.endsWith('/') ? url : `${url}/`;
+}
+
+const prevUrl = formatUrl(page.url.prev);
+const nextUrl = formatUrl(page.url.next);
+---
+
+{
+  totalPages > 1 && (
+    <nav aria-label="ページネーション" class="flex justify-center items-center gap-1.5 sm:gap-2 my-12">
+      {/* 前へボタン */}
+      {prevUrl ? (
+        <a
+          href={prevUrl}
+          class="h-9 min-w-9 px-3 flex items-center justify-center rounded border border-brand-border bg-white text-xs tracking-wider text-brand-text hover:border-brand-accent hover:text-brand-accent transition shadow-sm"
+          aria-label="前のページへ"
+        >
+          ←
+        </a>
+      ) : (
+        <span class="h-9 min-w-9 px-3 flex items-center justify-center rounded border border-brand-border/40 bg-stone-50 text-xs tracking-wider text-stone-300 cursor-not-allowed">
+          ←
+        </span>
+      )}
+
+      {/* ページ番号ボタン群 */}
+      {pageNumbers.map((num) => {
+        const isCurrent = num === currentPage;
+        return isCurrent ? (
+          <span
+            aria-current="page"
+            class="h-9 min-w-9 px-3 flex items-center justify-center rounded bg-brand-accent text-white text-xs font-semibold tracking-wider shadow-sm"
+          >
+            {num}
+          </span>
+        ) : (
+          <a
+            href={getPageUrl(num)}
+            class="h-9 min-w-9 px-3 flex items-center justify-center rounded border border-brand-border bg-white text-xs tracking-wider text-brand-text hover:border-brand-accent hover:text-brand-accent transition shadow-sm"
+          >
+            {num}
+          </a>
+        );
+      })}
+
+      {/* 次へボタン */}
+      {nextUrl ? (
+        <a
+          href={nextUrl}
+          class="h-9 min-w-9 px-3 flex items-center justify-center rounded border border-brand-border bg-white text-xs tracking-wider text-brand-text hover:border-brand-accent hover:text-brand-accent transition shadow-sm"
+          aria-label="次のページへ"
+        >
+          →
+        </a>
+      ) : (
+        <span class="h-9 min-w-9 px-3 flex items-center justify-center rounded border border-brand-border/40 bg-stone-50 text-xs tracking-wider text-stone-300 cursor-not-allowed">
+          →
+        </span>
+      )}
+    </nav>
+  )
+}
+

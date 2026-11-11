@@ -79,16 +79,16 @@ const newsList = await getNewsList({ limit: 3 });
       <div class="divide-y divide-brand-border">
         {
           newsList.map((item) => (
-            <div class="py-4 flex flex-col md:flex-row md:items-center justify-between gap-2 group">
-              <div class="flex items-center space-x-3">
-                <span class="text-xs text-brand-muted tracking-wider font-mono">{item.date}</span>
-                <span class="text-[10px] tracking-wider px-2 py-0.5 bg-brand-light text-brand-dark rounded">
+            <div class="py-4 flex flex-col md:flex-row md:items-center justify-between gap-3 group">
+              <div class="flex items-center space-x-3 shrink-0">
+                <span class="text-xs text-brand-muted tracking-wider font-mono w-24 shrink-0">{item.date}</span>
+                <span class="text-[10px] tracking-wider py-0.5 bg-brand-light text-brand-dark rounded border border-brand-border/60 w-36 text-center shrink-0 block">
                   {item.category}
                 </span>
               </div>
               <a
                 href={`/news/${item.id}/`}
-                class="text-xs md:text-sm tracking-wider text-brand-text group-hover:text-brand-accent transition-colors flex-1 md:ml-4"
+                class="text-xs md:text-sm tracking-wider text-brand-text group-hover:text-brand-accent transition-colors flex-1 md:ml-4 font-medium"
               >
                 {item.title}
               </a>
