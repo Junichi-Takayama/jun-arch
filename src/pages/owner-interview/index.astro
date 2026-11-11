@@ -30,8 +30,8 @@ const breadcrumbs = [
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {
         interviews.map((item) => (
-          <article class="group bg-brand-surface border border-brand-border rounded overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
-            <a href={`/owner-interview/${item.id}/`} class="block overflow-hidden aspect-[16/10] bg-stone-100 relative">
+          <article class="group bg-white border border-brand-border rounded overflow-hidden hover:border-brand-accent/60 transition-colors duration-300 flex flex-col">
+            <a href={`/owner-interview/${item.id}/`} class="block overflow-hidden aspect-[16/10] bg-transparent relative">
               {item.thumbnail?.url ? (
                 <img
                   src={item.thumbnail.url}
@@ -49,7 +49,7 @@ const breadcrumbs = [
                   メディア取材
                 </span>
               ) : (
-                <span class="absolute top-3 left-3 px-2.5 py-1 text-[11px] font-medium bg-stone-900/80 text-white rounded shadow-sm tracking-wider backdrop-blur-sm">
+                <span class="absolute top-3 left-3 px-2.5 py-1 text-[11px] font-medium bg-[#ecc58a] text-[#1e1e1e] rounded shadow-sm tracking-wider">
                   インタビュー
                 </span>
               )}

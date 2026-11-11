@@ -22,8 +22,52 @@ const breadcrumbs = [
   { name: interview.title },
 ];
 
+// サムネイルと本文最初の画像が重複している場合は本文最初を除去
+function cleanFirstImageIfDuplicate(content: string, thumbnailUrl?: string): string {
+  if (!thumbnailUrl) return content;
+
+  // バナー画像とオリジナル写真の対応マップ
+  const BANNER_ORIGIN_MAP: Record<string, string> = {
+    'banner-eg-house': 'ehouse-02',
+    'banner-f-house': 'fhouse-001',
+    'banner-nh-house': 'nhouse-01',
+  };
+
+  const normalizeName = (url: string) => {
+    const clean = url.split('?')[0].split('#')[0];
+    const filename = clean.split('/').pop() || '';
+    // リサイズサフィックス（例: -1024x683, -768x512 等）を除去して小文字化
+    const base = filename.replace(/-\d+x\d+(\.[a-zA-Z]+)$/, '$1').toLowerCase().replace(/\.[a-zA-Z]+$/, '');
+    return BANNER_ORIGIN_MAP[base] || base;
+  };
+
+  const thumbNorm = normalizeName(thumbnailUrl);
+
+  // 本文中の最初の [[IMG: ...]] を探索
+  const imgMatch = content.match(/\[\[IMG:\s*([^\]]+)\]\]/);
+  if (imgMatch) {
+    const firstImgNorm = normalizeName(imgMatch[1]);
+    if (thumbNorm === firstImgNorm || imgMatch[1].trim() === thumbnailUrl.trim()) {
+      return content.replace(/<p>\s*\[\[IMG:\s*[^\]]+\]\]\s*<\/p>/, '').replace(/\[\[IMG:\s*[^\]]+\]\]/, '');
+    }
+  }
+
+  // <img> タグ形式の場合
+  const tagMatch = content.match(/<img[^>]+src=["']([^"']+)["']/);
+  if (tagMatch) {
+    const firstImgNorm = normalizeName(tagMatch[1]);
+    if (thumbNorm === firstImgNorm || tagMatch[1].trim() === thumbnailUrl.trim()) {
+      return content.replace(/<figure[^>]*>.*?<img[^>]+>.*?<\/figure>/s, '').replace(/<img[^>]+>/, '');
+    }
+  }
+
+  return content;
+}
+
+const cleanedContent = cleanFirstImageIfDuplicate(interview.content, interview.thumbnail?.url);
+
 // 画像プレースホルダー [[IMG: /images/uploads/...]] を figure タグへ自動展開
-const renderedContent = interview.content.replace(
+const renderedContent = cleanedContent.replace(
   /\[\[IMG:\s*([^\]]+)\]\]/g,
   '<figure class="my-8"><img src="$1" alt="" class="w-full h-auto rounded-sm shadow-sm" loading="lazy" /></figure>'
 );
@@ -44,7 +88,7 @@ const renderedContent = interview.content.replace(
                 メディア取材
               </span>
             ) : (
-              <span class="px-2.5 py-0.5 bg-stone-900 text-white text-[10px] tracking-wider font-medium rounded shadow-sm">
+              <span class="px-2.5 py-0.5 bg-[#ecc58a] text-[#1e1e1e] text-[10px] tracking-wider font-medium rounded shadow-sm">
                 オーナーインタビュー
               </span>
             )
@@ -58,7 +102,7 @@ const renderedContent = interview.content.replace(
       <!-- Thumbnail -->
       {
         interview.thumbnail?.url && (
-          <div class="aspect-[16/10] overflow-hidden rounded-sm bg-brand-surface mb-10 border border-brand-border shadow-sm">
+          <div class="aspect-[16/10] overflow-hidden rounded-sm bg-white mb-10 border border-brand-border shadow-sm">
             <img
               src={interview.thumbnail.url}
               alt={interview.title}
