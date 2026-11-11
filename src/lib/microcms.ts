@@ -22,6 +22,10 @@ export interface NewsItem {
     width?: number;
     height?: number;
   };
+  show_form?: boolean;
+  event_date1?: string;
+  event_date2?: string;
+  event_date3?: string;
 }
 
 // microCMSレスポンス用生データ型
@@ -31,10 +35,14 @@ interface MicroCMSNewsRaw {
   publishedAt?: string;
   createdAt?: string;
   date?: string;
-  category?: string | { id?: string; name?: string };
+  category?: string | string[] | { id?: string; name?: string } | { id?: string; name?: string }[];
   content?: string;
   body?: string;
   thumbnail?: { url: string; width?: number; height?: number };
+  show_form?: boolean;
+  event_date1?: string;
+  event_date2?: string;
+  event_date3?: string;
 }
 
 // ==========================================
@@ -119,16 +127,19 @@ export const client = isMicroCMSConfigured
 
 function formatNewsItem(item: MicroCMSNewsRaw): NewsItem {
   let categoryName = 'お知らせ';
-  if (typeof item.category === 'object' && item.category !== null) {
-    categoryName = item.category.name || 'お知らせ';
+  if (Array.isArray(item.category) && item.category.length > 0) {
+    const firstCat = item.category[0];
+    categoryName = typeof firstCat === 'string' ? firstCat : (firstCat.name || 'お知らせ');
+  } else if (typeof item.category === 'object' && item.category !== null) {
+    categoryName = (item.category as { id?: string; name?: string }).name || 'お知らせ';
   } else if (typeof item.category === 'string' && item.category.trim() !== '') {
     categoryName = item.category;
   }
 
-  const rawDate = item.publishedAt || item.createdAt;
+  const rawDate = item.date || item.publishedAt || item.createdAt;
   const dateStr = rawDate
     ? new Date(rawDate).toISOString().split('T')[0].replace(/-/g, '.')
-    : item.date || '2026.10.01';
+    : '2026.10.01';
 
   return {
     id: item.id,
@@ -139,6 +150,10 @@ function formatNewsItem(item: MicroCMSNewsRaw): NewsItem {
     category: categoryName,
     content: item.content || item.body || '',
     thumbnail: item.thumbnail,
+    show_form: Boolean(item.show_form),
+    event_date1: item.event_date1,
+    event_date2: item.event_date2,
+    event_date3: item.event_date3,
   };
 }
 

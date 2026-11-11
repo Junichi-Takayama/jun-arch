@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Breadcrumb from '../../components/common/Breadcrumb.astro';
+import EventReservationForm from '../../components/forms/EventReservationForm.astro';
 import { getNewsList, getNewsDetail } from '../../lib/microcms';
 
 export async function getStaticPaths() {
@@ -21,6 +22,34 @@ const breadcrumbs = [
   { name: 'お知らせ・見学会', href: '/news/' },
   { name: news.title },
 ];
+
+function formatEventDate(dateStr?: string) {
+  if (!dateStr) return null;
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return null;
+    const year = d.getFullYear();
+    const month = d.getMonth() + 1;
+    const date = d.getDate();
+    const days = ['日', '月', '火', '水', '木', '金', '土'];
+    const day = days[d.getDay()];
+    return `${year}年${month}月${date}日(${day})`;
+  } catch {
+    return null;
+  }
+}
+
+const eventDates = [
+  formatEventDate(news.event_date1),
+  formatEventDate(news.event_date2),
+  formatEventDate(news.event_date3),
+].filter(Boolean) as string[];
+
+// 画像プレースホルダー [[IMG: /images/uploads/...]] を figure タグへ自動展開
+const renderedContent = news.content.replace(
+  /\[\[IMG:\s*([^\]]+)\]\]/g,
+  '<figure class="my-8"><img src="$1" alt="" class="w-full h-auto rounded-sm shadow-sm" loading="lazy" /></figure>'
+);
 ---
 
 <Layout title={`${news.title} – 株式会社 加藤淳設計事務所`}>
@@ -58,8 +87,15 @@ const breadcrumbs = [
       <!-- Body Content -->
       <div
         class="news-content text-xs sm:text-sm text-brand-text leading-[2.2] tracking-wider space-y-6 font-light"
-        set:html={news.content}
+        set:html={renderedContent}
       />
+
+      <!-- Event Reservation Form (見学会予約フォーム) -->
+      {
+        news.show_form && (
+          <EventReservationForm eventTitle={news.title} eventDates={eventDates} />
+        )
+      }
 
       <!-- Action Navigation -->
       <div class="pt-12 mt-12 border-t border-brand-border flex flex-col sm:flex-row justify-between items-center gap-4">
@@ -70,13 +106,24 @@ const breadcrumbs = [
           <span>←</span>
           <span>お知らせ一覧に戻る</span>
         </a>
-        <a
-          href="/contact/"
-          class="inline-flex items-center gap-2 px-6 py-2.5 bg-brand-accent hover:opacity-95 text-white text-xs tracking-wider rounded font-medium transition shadow-sm w-full sm:w-auto justify-center"
-        >
-          <span>家づくりのご相談・見学予約はこちら</span>
-          <span>→</span>
-        </a>
+        {
+          news.show_form ? (
+            <a
+              href="#reservation-form"
+              class="inline-flex items-center gap-2 px-6 py-2.5 bg-brand-accent hover:opacity-95 text-white text-xs tracking-wider rounded font-medium transition shadow-sm w-full sm:w-auto justify-center"
+            >
+              <span>見学会予約フォームへ進む ↓</span>
+            </a>
+          ) : (
+            <a
+              href="/contact/"
+              class="inline-flex items-center gap-2 px-6 py-2.5 bg-brand-accent hover:opacity-95 text-white text-xs tracking-wider rounded font-medium transition shadow-sm w-full sm:w-auto justify-center"
+            >
+              <span>家づくりのご相談はこちら</span>
+              <span>→</span>
+            </a>
+          )
+        }
       </div>
     </article>
   </div>
