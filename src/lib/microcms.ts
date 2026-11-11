@@ -171,12 +171,23 @@ export async function getNewsList(queries?: MicroCMSQueries): Promise<NewsItem[]
   }
 
   try {
+    const mergedQueries = {
+      orders: '-date',
+      ...queries,
+    };
+
+    // limit の指定がない場合は getAllContents で全件取得
+    if (!queries?.limit) {
+      const allContents = await client.getAllContents<MicroCMSNewsRaw>({
+        endpoint: 'news',
+        queries: mergedQueries,
+      });
+      return allContents.map(formatNewsItem);
+    }
+
     const res = await client.getList<MicroCMSNewsRaw>({
       endpoint: 'news',
-      queries: {
-        orders: '-publishedAt',
-        ...queries,
-      },
+      queries: mergedQueries,
     });
 
     return res.contents.map(formatNewsItem);
