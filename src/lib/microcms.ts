@@ -394,6 +394,16 @@ function formatMediaItem(item: MicroCMSMediaRaw): MediaItem {
     thumbObj = { url: item.thumbnail, width: 1024, height: 768 };
   }
 
+  const bodyHtml = item.contents || item.content || '';
+
+  // サムネイルが未設定の場合、本文最初の [[IMG: ...]] をサムネイルとして自動充当
+  if (!thumbObj && bodyHtml) {
+    const imgMatch = bodyHtml.match(/\[\[IMG:\s*([^\]]+)\]\]/);
+    if (imgMatch) {
+      thumbObj = { url: imgMatch[1].trim(), width: 1024, height: 768 };
+    }
+  }
+
   let categoryName = 'メディア掲載';
   if (typeof item.category === 'string') {
     categoryName = item.category;
@@ -402,6 +412,11 @@ function formatMediaItem(item: MicroCMSMediaRaw): MediaItem {
     categoryName = typeof first === 'string' ? first : (first.name || 'メディア掲載');
   } else if (typeof item.category === 'object' && item.category !== null) {
     categoryName = (item.category as { name?: string }).name || 'メディア掲載';
+  } else if (item.title) {
+    // タイトルからカテゴリを自動判定
+    if (item.title.includes('雑誌掲載')) categoryName = '雑誌掲載';
+    else if (item.title.includes('WEB掲載') || item.title.includes('Web掲載') || item.title.includes('徹底解剖')) categoryName = 'WEB掲載';
+    else if (item.title.includes('動画掲載') || item.title.includes('YouTube')) categoryName = '動画掲載';
   }
 
   return {
@@ -411,7 +426,7 @@ function formatMediaItem(item: MicroCMSMediaRaw): MediaItem {
     publishedAt: item.publishedAt,
     createdAt: item.createdAt,
     date: dateStr,
-    content: item.contents || item.content || '',
+    content: bodyHtml,
     thumbnail: thumbObj,
   };
 }
