@@ -36,8 +36,12 @@ function cleanFirstImageIfDuplicate(content: string, thumbnailUrl?: string): str
   const normalizeName = (url: string) => {
     const clean = url.split('?')[0].split('#')[0];
     const filename = clean.split('/').pop() || '';
-    // リサイズサフィックス（例: -1024x683, -768x512 等）を除去して小文字化
-    const base = filename.replace(/-\d+x\d+(\.[a-zA-Z]+)$/, '$1').toLowerCase().replace(/\.[a-zA-Z]+$/, '');
+    // リサイズサフィックス（例: -1024x683, -768x512, -scaled 等）を除去して小文字化
+    const base = filename
+      .replace(/-\d+x\d+(\.[a-zA-Z]+)$/, '$1')
+      .replace(/-(?:scaled|rotated)(\.[a-zA-Z]+)$/, '$1')
+      .toLowerCase()
+      .replace(/\.[a-zA-Z]+$/, '');
     return BANNER_ORIGIN_MAP[base] || base;
   };
 

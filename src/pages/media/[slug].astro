@@ -1,0 +1,142 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/common/Breadcrumb.astro';
+import { getMediaList, getMediaDetail } from '../../lib/microcms';
+
+export async function getStaticPaths() {
+  const mediaList = await getMediaList();
+  return mediaList.map((item) => ({
+    params: { slug: item.id },
+  }));
+}
+
+const { slug } = Astro.params;
+const mediaItem = await getMediaDetail(slug as string);
+
+if (!mediaItem) {
+  return Astro.redirect('/media/');
+}
+
+const breadcrumbs = [
+  { name: 'メディア掲載', href: '/media/' },
+  { name: mediaItem.title },
+];
+
+// サムネイルと本文最初の画像が重複している場合は本文最初を除去
+function cleanFirstImageIfDuplicate(content: string, thumbnailUrl?: string): string {
+  if (!thumbnailUrl) return content;
+
+  const normalizeName = (url: string) => {
+    const clean = url.split('?')[0].split('#')[0];
+    const filename = clean.split('/').pop() || '';
+    return filename
+      .replace(/-\d+x\d+(\.[a-zA-Z]+)$/, '$1')
+      .replace(/-(?:scaled|rotated)(\.[a-zA-Z]+)$/, '$1')
+      .toLowerCase()
+      .replace(/\.[a-zA-Z]+$/, '');
+  };
+
+  const thumbNorm = normalizeName(thumbnailUrl);
+
+  const imgMatch = content.match(/\[\[IMG:\s*([^\]]+)\]\]/);
+  if (imgMatch) {
+    const firstImgNorm = normalizeName(imgMatch[1]);
+    if (thumbNorm === firstImgNorm || imgMatch[1].trim() === thumbnailUrl.trim()) {
+      return content.replace(/<p>\s*\[\[IMG:\s*[^\]]+\]\]\s*<\/p>/, '').replace(/\[\[IMG:\s*[^\]]+\]\]/, '');
+    }
+  }
+
+  const tagMatch = content.match(/<img[^>]+src=["']([^"']+)["']/);
+  if (tagMatch) {
+    const firstImgNorm = normalizeName(tagMatch[1]);
+    if (thumbNorm === firstImgNorm || tagMatch[1].trim() === thumbnailUrl.trim()) {
+      return content.replace(/<figure[^>]*>.*?<img[^>]+>.*?<\/figure>/s, '').replace(/<img[^>]+>/, '');
+    }
+  }
+
+  return content;
+}
+
+const cleanedContent = cleanFirstImageIfDuplicate(mediaItem.content, mediaItem.thumbnail?.url);
+
+// 画像プレースホルダー [[IMG: /images/uploads/...]] を figure タグへ自動展開
+const renderedContent = cleanedContent.replace(
+  /\[\[IMG:\s*([^\]]+)\]\]/g,
+  '<figure class="my-8"><img src="$1" alt="" class="w-full h-auto rounded-sm shadow-sm" loading="lazy" /></figure>'
+);
+---
+
+<Layout title={`${mediaItem.title} – メディア掲載 – 株式会社 加藤淳設計事務所`}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pt-4 pb-20">
+    <Breadcrumb items={breadcrumbs} />
+
+    <!-- Article Header -->
+    <article class="max-w-3xl mx-auto pt-6 pb-12">
+      <header class="border-b border-brand-border pb-6 mb-8 space-y-4">
+        <div class="flex items-center gap-3 text-xs">
+          <time class="text-brand-muted font-mono tracking-wider">{mediaItem.date}</time>
+          <span class="px-2.5 py-0.5 bg-[#ecc58a] text-[#1e1e1e] text-[10px] tracking-wider font-medium rounded shadow-sm">
+            {mediaItem.category}
+          </span>
+        </div>
+        <h1 class="text-xl sm:text-2xl md:text-3xl font-serif font-medium text-brand-text leading-snug tracking-wider">
+          {mediaItem.title}
+        </h1>
+      </header>
+
+      <!-- Thumbnail -->
+      {
+        mediaItem.thumbnail?.url && (
+          <div class="aspect-[16/10] overflow-hidden rounded-sm bg-white mb-10 border border-brand-border shadow-sm">
+            <img
+              src={mediaItem.thumbnail.url}
+              alt={mediaItem.title}
+              class="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </div>
+        )
+      }
+
+      <!-- Body Content -->
+      <div
+        class="media-content text-xs sm:text-sm text-brand-text leading-[2.2] tracking-wider space-y-6 font-light"
+        set:html={renderedContent}
+      />
+
+      <!-- Navigation / Back to Media List -->
+      <div class="mt-16 pt-8 border-t border-brand-border flex items-center justify-between">
+        <a
+          href="/media/"
+          class="inline-flex items-center text-xs text-brand-muted hover:text-brand-accent tracking-widest font-medium transition-colors"
+        >
+          ← メディア掲載一覧に戻る
+        </a>
+        <a
+          href="/"
+          class="inline-flex items-center text-xs text-brand-muted hover:text-brand-accent tracking-widest font-medium transition-colors"
+        >
+          トップページ
+        </a>
+      </div>
+    </article>
+  </div>
+</Layout>
+
+<style is:global>
+  .media-content a {
+    color: #926118;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: opacity 0.2s;
+  }
+  .media-content a:hover {
+    opacity: 0.8;
+  }
+  .media-content p {
+    margin-bottom: 1.5rem;
+  }
+  .media-content p:empty {
+    display: none;
+  }
+</style>

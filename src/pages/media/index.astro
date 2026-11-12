@@ -1,36 +1,81 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Breadcrumb from '../../components/common/Breadcrumb.astro';
+import { getMediaList } from '../../lib/microcms';
+
+const mediaList = await getMediaList();
 
 const breadcrumbs = [
-  { name: '家づくりについて', href: '/concept/' },
   { name: 'メディア掲載' }
 ];
 ---
 
-<Layout title="メディア掲載 – 株式会社 加藤淳設計事務所">
+<Layout
+  title="メディア掲載 – 株式会社 加藤淳設計事務所"
+  description="加藤淳設計事務所の住宅実例や建築への取り組みが紹介された、雑誌・WEBマガジン・YouTube・業界専門誌などのメディア掲載実績一覧です。"
+>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pt-4 pb-20">
     <Breadcrumb items={breadcrumbs} />
 
     <!-- Page Header -->
-    <div class="text-center py-10 md:py-14 border-b border-brand-border mb-10">
+    <div class="text-center py-10 md:py-14 border-b border-brand-border mb-12">
       <span class="text-xs font-serif tracking-widest text-brand-accent uppercase block mb-2 font-semibold">Media</span>
       <h1 class="text-2xl md:text-3xl font-serif tracking-wider text-brand-text mb-4">
         メディア掲載
       </h1>
-      <p class="text-xs md:text-sm text-brand-muted tracking-wider">
-        雑誌・WEBマガジン・テレビ等のメディア掲載実績
+      <p class="text-xs md:text-sm text-brand-muted tracking-wider max-w-2xl mx-auto leading-relaxed">
+        雑誌・WEBマガジン・YouTube・業界専門誌等、<br class="hidden sm:inline" />
+        加藤淳設計事務所の住まいづくりを取り上げていただいた掲載実績をご紹介します。
       </p>
     </div>
 
-    <!-- コンテンツ枠（ハコ） -->
-    <div class="bg-brand-surface/40 border border-brand-border rounded-sm p-8 md:p-12 text-center text-brand-muted">
-      <p class="font-serif text-sm md:text-base text-brand-text mb-2">【コンテンツ準備中】</p>
-      <p class="text-xs">現行サイトのメディア掲載実績を移植・整備予定です。</p>
+    <!-- Media Grid: 3-Columns -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {
+        mediaList.map((item) => (
+          <article class="group bg-white border border-brand-border rounded overflow-hidden hover:border-brand-accent/60 transition-colors duration-300 flex flex-col">
+            <a href={`/media/${item.id}/`} class="block overflow-hidden aspect-[16/10] bg-transparent relative">
+              {item.thumbnail?.url ? (
+                <img
+                  src={item.thumbnail.url}
+                  alt={item.title}
+                  class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                  loading="lazy"
+                />
+              ) : (
+                <div class="w-full h-full flex items-center justify-center text-xs text-brand-muted font-serif">
+                  No Image
+                </div>
+              )}
+              <span class="absolute top-3 left-3 px-2.5 py-1 text-[11px] font-medium bg-[#ecc58a] text-[#1e1e1e] rounded shadow-sm tracking-wider">
+                {item.category}
+              </span>
+            </a>
+
+            <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+              <div>
+                <time class="block text-xs font-mono text-brand-muted mb-2 tracking-wider">
+                  {item.date}
+                </time>
+                <h2 class="text-sm md:text-base font-serif font-medium text-brand-text leading-snug group-hover:text-brand-accent transition-colors line-clamp-2">
+                  <a href={`/media/${item.id}/`}>
+                    {item.title}
+                  </a>
+                </h2>
+              </div>
+
+              <div class="pt-2 border-t border-brand-border/60 flex items-center justify-between text-xs text-brand-accent font-medium tracking-wider">
+                <span>詳細を見る</span>
+                <span class="transform group-hover:translate-x-1 transition-transform duration-200">→</span>
+              </div>
+            </div>
+          </article>
+        ))
+      }
     </div>
 
     <!-- Back to Top CTA -->
-    <div class="text-center pt-12">
+    <div class="text-center pt-16">
       <a
         href="/"
         class="inline-block px-8 py-3 bg-brand-surface hover:bg-brand-light border border-brand-border text-brand-text text-xs tracking-widest rounded font-medium transition shadow-sm"
@@ -40,3 +85,4 @@ const breadcrumbs = [
     </div>
   </div>
 </Layout>
+

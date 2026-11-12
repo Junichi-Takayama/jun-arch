@@ -345,3 +345,137 @@ export async function getOwnerInterviewDetail(contentId: string, queries?: Micro
   }
 }
 
+
+// ==========================================
+// 6. 型定義 & 取得関数 (Media)
+// ==========================================
+
+import mockMedia from '../data/media.json';
+
+export interface MediaItem {
+  id: string;
+  title: string;
+  category: string;
+  publishedAt?: string;
+  createdAt?: string;
+  date: string; // 表示用（YYYY.MM.DD）
+  content: string; // HTML文字列
+  thumbnail?: {
+    url: string;
+    width?: number;
+    height?: number;
+  };
+}
+
+interface MicroCMSMediaRaw {
+  id: string;
+  title: string;
+  category?: string | string[] | { id?: string; name?: string };
+  publishedAt?: string;
+  createdAt?: string;
+  date?: string;
+  contents?: string;
+  content?: string;
+  thumbnail?: { url: string; width?: number; height?: number } | string;
+}
+
+export const MOCK_MEDIA: MediaItem[] = mockMedia as MediaItem[];
+
+function formatMediaItem(item: MicroCMSMediaRaw): MediaItem {
+  const rawDate = item.date || item.publishedAt || item.createdAt;
+  const dateStr = rawDate
+    ? new Date(rawDate).toISOString().split('T')[0].replace(/-/g, '.')
+    : '2025.01.01';
+
+  let thumbObj: { url: string; width?: number; height?: number } | undefined;
+  if (typeof item.thumbnail === 'object' && item.thumbnail !== null) {
+    thumbObj = item.thumbnail;
+  } else if (typeof item.thumbnail === 'string' && item.thumbnail.trim() !== '') {
+    thumbObj = { url: item.thumbnail, width: 1024, height: 768 };
+  }
+
+  let categoryName = 'メディア掲載';
+  if (typeof item.category === 'string') {
+    categoryName = item.category;
+  } else if (Array.isArray(item.category) && item.category.length > 0) {
+    const first = item.category[0];
+    categoryName = typeof first === 'string' ? first : (first.name || 'メディア掲載');
+  } else if (typeof item.category === 'object' && item.category !== null) {
+    categoryName = (item.category as { name?: string }).name || 'メディア掲載';
+  }
+
+  return {
+    id: item.id,
+    title: item.title,
+    category: categoryName,
+    publishedAt: item.publishedAt,
+    createdAt: item.createdAt,
+    date: dateStr,
+    content: item.contents || item.content || '',
+    thumbnail: thumbObj,
+  };
+}
+
+export async function getMediaList(queries?: MicroCMSQueries): Promise<MediaItem[]> {
+  if (!client) {
+    const list = [...MOCK_MEDIA];
+    if (queries?.limit && queries.limit > 0) {
+      return list.slice(0, queries.limit);
+    }
+    return list;
+  }
+
+  try {
+    const mergedQueries = {
+      orders: '-date',
+      ...queries,
+    };
+
+    if (!queries?.limit) {
+      const allContents = await client.getAllContents<MicroCMSMediaRaw>({
+        endpoint: 'media',
+        queries: mergedQueries,
+      });
+      if (allContents.length > 0) {
+        return allContents.map(formatMediaItem);
+      }
+      return [...MOCK_MEDIA];
+    }
+
+    const res = await client.getList<MicroCMSMediaRaw>({
+      endpoint: 'media',
+      queries: mergedQueries,
+    });
+
+    if (res.contents.length > 0) {
+      return res.contents.map(formatMediaItem);
+    }
+    return [...MOCK_MEDIA];
+  } catch (error) {
+    console.warn('[microCMS] media一覧の取得に失敗したため、モックデータを返却します:', error);
+    const list = [...MOCK_MEDIA];
+    if (queries?.limit && queries.limit > 0) {
+      return list.slice(0, queries.limit);
+    }
+    return list;
+  }
+}
+
+export async function getMediaDetail(contentId: string, queries?: MicroCMSQueries): Promise<MediaItem | null> {
+  if (!client) {
+    return MOCK_MEDIA.find((item) => item.id === contentId) || null;
+  }
+
+  try {
+    const item = await client.getListDetail<MicroCMSMediaRaw>({
+      endpoint: 'media',
+      contentId,
+      queries,
+    });
+    return formatMediaItem(item);
+  } catch (error) {
+    console.warn(`[microCMS] media/${contentId} の取得に失敗したため、モックデータを検索します:`, error);
+    return MOCK_MEDIA.find((item) => item.id === contentId) || null;
+  }
+}
+
