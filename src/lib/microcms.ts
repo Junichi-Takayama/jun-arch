@@ -267,7 +267,17 @@ function formatOwnerInterviewItem(item: MicroCMSOwnerInterviewRaw): OwnerIntervi
     thumbObj = { url: item.thumbnail, width: 1024, height: 683 };
   }
 
-  const isExternal = item.id.startsWith('daily-lives-');
+  const bodyHtml = item.contents || item.content || '';
+
+  // サムネイルが未設定の場合、本文最初の [[IMG: ...]] をサムネイルとして自動充当
+  if (!thumbObj && bodyHtml) {
+    const imgMatch = bodyHtml.match(/\[\[IMG:\s*([^\]]+)\]\]/);
+    if (imgMatch) {
+      thumbObj = { url: imgMatch[1].trim(), width: 1024, height: 683 };
+    }
+  }
+
+  const isExternal = item.id.startsWith('daily-lives-') || bodyHtml.includes('external-link-card') || bodyHtml.includes('Daily Lives Niigata 取材記事を読む');
 
   return {
     id: item.id,
@@ -275,7 +285,7 @@ function formatOwnerInterviewItem(item: MicroCMSOwnerInterviewRaw): OwnerIntervi
     publishedAt: item.publishedAt,
     createdAt: item.createdAt,
     date: dateStr,
-    content: item.contents || item.content || '',
+    content: bodyHtml,
     thumbnail: thumbObj,
     isExternal,
   };
