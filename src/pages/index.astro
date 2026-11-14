@@ -2,9 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 import WorkCard from '../components/common/WorkCard.astro';
 import { worksList, noteList, mediaList } from '../data/siteData';
-import { getNewsList } from '../lib/microcms';
+import { getNewsList, getOwnerInterviewList } from '../lib/microcms';
 
 const newsList = await getNewsList({ limit: 3 });
+const ownerInterviewList = await getOwnerInterviewList({ limit: 3 });
 ---
 
 <Layout title="株式会社 加藤淳設計事務所 – 技術の先にある、いごこちを">
@@ -269,7 +270,7 @@ const newsList = await getNewsList({ limit: 3 });
     </div>
   </section>
 
-  <!-- 6. オーナーインタビュー（3カラム外部リンクバナー配置） -->
+  <!-- 6. オーナーインタビュー（microCMS連動 最新3件カードグリッド） -->
   <section class="py-16 md:py-20 bg-white border-b border-brand-border">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
       <div class="flex items-center justify-between mb-8 pb-3 border-b border-brand-border">
@@ -285,47 +286,52 @@ const newsList = await getNewsList({ limit: 3 });
         </a>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- 1: E邸 -->
-        <a
-          href="/works/ua025/"
-          class="block overflow-hidden rounded-sm shadow-sm hover:opacity-90 transition group"
-        >
-          <img
-            src="https://jun-arch.com/wp-content/uploads/2026/10/banner-eg-house-768x512.png"
-            alt="E邸 オーナーインタビュー"
-            class="w-full h-auto object-cover group-hover:scale-[1.02] transition duration-300"
-            loading="lazy"
-          />
-        </a>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {
+          ownerInterviewList.slice(0, 3).map((item) => (
+            <article class="group bg-white border border-brand-border rounded overflow-hidden hover:border-brand-accent/60 transition-colors duration-300 flex flex-col">
+              <a href={`/owner-interview/${item.id}/`} class="block overflow-hidden aspect-[16/10] bg-brand-surface relative">
+                <img
+                  src={item.thumbnail?.url || '/images/noimage.png'}
+                  alt={item.title}
+                  class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                  loading="lazy"
+                />
+                {item.isExternal ? (
+                  <span class="absolute top-3 left-3 px-2.5 py-1 text-[11px] font-medium bg-[#ecc58a] text-[#1e1e1e] rounded shadow-sm tracking-wider">
+                    メディア取材
+                  </span>
+                ) : (
+                  <span class="absolute top-3 left-3 px-2.5 py-1 text-[11px] font-medium bg-[#ecc58a] text-[#1e1e1e] rounded shadow-sm tracking-wider">
+                    インタビュー
+                  </span>
+                )}
+              </a>
 
-        <!-- 2: シマトネリコの木 -->
-        <a
-          href="/owner-interview/"
-          class="block overflow-hidden rounded-sm shadow-sm hover:opacity-90 transition group"
-        >
-          <img
-            src="https://jun-arch.com/wp-content/uploads/2026/10/banner-f-house-768x512.png"
-            alt="シマトネリコの木 オーナーインタビュー"
-            class="w-full h-auto object-cover group-hover:scale-[1.02] transition duration-300"
-            loading="lazy"
-          />
-        </a>
-
-        <!-- 3: W邸（日常新潟） -->
-        <a
-          href="https://daily-lives-niigata.com/2025/09/01/kato-ag-10/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="block overflow-hidden rounded-sm shadow-sm hover:opacity-90 transition group"
-        >
-          <img
-            src="https://jun-arch.com/wp-content/uploads/2026/10/banner-w-house-768x512.png"
-            alt="W邸 オーナーインタビュー"
-            class="w-full h-auto object-cover group-hover:scale-[1.02] transition duration-300"
-            loading="lazy"
-          />
-        </a>
+              <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                <div class="space-y-2">
+                  <span class="text-xs text-brand-muted font-mono tracking-wider block">
+                    {item.date}
+                  </span>
+                  <h3 class="font-serif font-medium text-sm md:text-base text-brand-text group-hover:text-brand-accent transition leading-snug line-clamp-2">
+                    <a href={`/owner-interview/${item.id}/`}>
+                      {item.title}
+                    </a>
+                  </h3>
+                </div>
+                <div class="pt-2 text-right">
+                  <a
+                    href={`/owner-interview/${item.id}/`}
+                    class="inline-flex items-center text-xs tracking-wider text-brand-muted group-hover:text-brand-accent transition"
+                  >
+                    <span>記事を読む</span>
+                    <span class="ml-1 text-xs">→</span>
+                  </a>
+                </div>
+              </div>
+            </article>
+          ))
+        }
       </div>
     </div>
   </section>
