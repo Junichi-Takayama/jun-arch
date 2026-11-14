@@ -40,9 +40,12 @@ const breadcrumbs = [
                   loading="lazy"
                 />
               ) : (
-                <div class="w-full h-full flex items-center justify-center text-xs text-brand-muted font-serif">
-                  No Image
-                </div>
+                <img
+                  src="/images/noimage.png"
+                  alt={item.title}
+                  class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                  loading="lazy"
+                />
               )}
               {item.isExternal ? (
                 <span class="absolute top-3 left-3 px-2.5 py-1 text-[11px] font-medium bg-[#ecc58a] text-[#1e1e1e] rounded shadow-sm tracking-wider">

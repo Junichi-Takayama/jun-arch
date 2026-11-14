@@ -37,10 +37,12 @@ const breadcrumbs = [{ name: 'ブログ一覧' }];
                   loading="lazy"
                 />
               ) : (
-                <div class="w-full h-full flex flex-col items-center justify-center text-brand-muted p-4 text-center">
-                  <span class="font-serif text-xs tracking-widest text-brand-sub mb-1">ARCH CRAFT</span>
-                  <span class="text-[11px] line-clamp-2">{post.title}</span>
-                </div>
+                <img 
+                  src="/images/noimage.png" 
+                  alt={post.title} 
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                  loading="lazy"
+                />
               )}
             </a>
             <div class="flex items-center gap-3 text-xs mb-2">

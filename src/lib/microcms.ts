@@ -271,11 +271,23 @@ function formatOwnerInterviewItem(item: MicroCMSOwnerInterviewRaw): OwnerIntervi
 
   const bodyHtml = item.contents || item.content || '';
 
-  // サムネイルが未設定の場合、本文最初の [[IMG: ...]] をサムネイルとして自動充当
-  if (!thumbObj && bodyHtml) {
-    const imgMatch = bodyHtml.match(/\[\[IMG:\s*([^\]]+)\]\]/);
-    if (imgMatch) {
-      thumbObj = { url: imgMatch[1].trim(), width: 1024, height: 683 };
+  // サムネイルが未設定の場合
+  if (!thumbObj) {
+    // 1. 本文最初の [[IMG: ...]] をサムネイルとして自動充当
+    if (bodyHtml) {
+      const imgMatch = bodyHtml.match(/\[\[IMG:\s*([^\]]+)\]\]/);
+      if (imgMatch) {
+        thumbObj = { url: imgMatch[1].trim(), width: 1024, height: 683 };
+      }
+    }
+    // 2. 本文にも画像がない場合（外部取材メディア記事等）、ローカルデータからサムネイルを自動充当
+    if (!thumbObj) {
+      const matched = MOCK_OWNER_INTERVIEWS.find(
+        (m) => m.id === item.id || m.title.trim() === item.title.trim()
+      );
+      if (matched?.thumbnail) {
+        thumbObj = matched.thumbnail;
+      }
     }
   }
 
