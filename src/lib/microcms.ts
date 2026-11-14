@@ -239,6 +239,7 @@ export interface OwnerInterviewItem {
     height?: number;
   };
   isExternal?: boolean;
+  externalUrl?: string;
 }
 
 interface MicroCMSOwnerInterviewRaw {
@@ -250,6 +251,7 @@ interface MicroCMSOwnerInterviewRaw {
   contents?: string;
   content?: string;
   thumbnail?: { url: string; width?: number; height?: number } | string;
+  external_url?: string;
 }
 
 export const MOCK_OWNER_INTERVIEWS: OwnerInterviewItem[] = mockOwnerInterviews as OwnerInterviewItem[];
@@ -277,7 +279,16 @@ function formatOwnerInterviewItem(item: MicroCMSOwnerInterviewRaw): OwnerIntervi
     }
   }
 
-  const isExternal = item.id.startsWith('daily-lives-') || bodyHtml.includes('external-link-card') || bodyHtml.includes('Daily Lives Niigata 取材記事を読む');
+  // 外部取材URLの判定（microCMSの external_url 入力値、または本文内既存カードからの抽出）
+  let extUrl = item.external_url?.trim() || '';
+  if (!extUrl && bodyHtml.includes('external-link-card')) {
+    const linkMatch = bodyHtml.match(/href="(https?:\/\/[^"]+)"/);
+    if (linkMatch) {
+      extUrl = linkMatch[1];
+    }
+  }
+
+  const isExternal = Boolean(extUrl) || item.id.startsWith('daily-lives-') || bodyHtml.includes('external-link-card') || bodyHtml.includes('Daily Lives Niigata 取材記事を読む');
 
   return {
     id: item.id,
@@ -288,6 +299,7 @@ function formatOwnerInterviewItem(item: MicroCMSOwnerInterviewRaw): OwnerIntervi
     content: bodyHtml,
     thumbnail: thumbObj,
     isExternal,
+    externalUrl: extUrl || undefined,
   };
 }
 
